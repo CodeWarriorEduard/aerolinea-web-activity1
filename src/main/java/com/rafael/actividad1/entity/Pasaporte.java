@@ -15,7 +15,7 @@ public class Pasaporte {
     private String numero;
 
     @OneToOne
-    @JoinColumn(name = "pasajero_id", referencedColumnName = "id")
+    @JoinColumn(name = "pasajero_id", referencedColumnName = "id", unique = true)
     private Pasajero pasajero;
 
 }
