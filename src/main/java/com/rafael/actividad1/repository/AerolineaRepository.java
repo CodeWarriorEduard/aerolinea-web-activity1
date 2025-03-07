@@ -9,21 +9,26 @@ import java.util.Optional;
 
 public interface AerolineaRepository extends JpaRepository<Aerolinea, Long> {
 
-
     void deleteById(Long id);
     Optional<Aerolinea> findById(Long id);
     Aerolinea save(Aerolinea aerolinea);
     List<Aerolinea> findAll();
+    Long countBy();
 
-    @Query("select aerolinea from Aerolinea aerolinea where aerolinea.nombre like %a")
+
+    @Query("select aerolinea from Aerolinea aerolinea where aerolinea.nombre like concat('A', '%')")
     List<Aerolinea> aerolineaStartsWithA();
 
-    @Query("select aerolinea from Aerolinea join vuelos_aerolineas v on v.aerolinea_id = aerolinea.id join Reserva r on r.vuelo.id = v.vuelo_id join Pasajero  p on p.id = r.pasajero.id where p.nombre == :nombre")
-    Optional<Aerolinea> findAerolineaByPassengerName(String name);
+    @Query("select distinct  aerolineas from Aerolinea  aerolineas join  aerolineas.vuelos v join v.reservas r join r.pasajero p where p.nombre = :nombre")
+    List<Aerolinea> findAerolineaByPassengerName(String name);
 
-    @Query("select count(aerolineas.id) from Aerolinea aerolineas join vuelos_aerolineas va on va.aerolinea_id = aerolineas.id group by aerolineas")
-    List<Aerolinea> aerolineasTwoVuelos();
+    @Query("select aerolineas from Aerolinea aerolineas join aerolineas.vuelos v group by aerolineas having count(*) = 2")
+    List<Aerolinea> aerolineasWithTwoFlightsx();
 
+    @Query("select aerolineas from Aerolinea aerolineas order by  aerolineas.nombre")
+    List<Aerolinea> findAllOrderedByName();
 
+    @Query("select count(aerolineas) from Aerolinea  aerolineas")
+    Long countAllAerolineas();
 
 }
