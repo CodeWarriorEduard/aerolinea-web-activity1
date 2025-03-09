@@ -1,7 +1,10 @@
 package com.rafael.actividad1.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 import java.util.UUID;
@@ -9,6 +12,10 @@ import java.util.UUID;
 @Entity
 @Data
 @Table(name = "vuelos")
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+
 public class Vuelo {
 
     @Id

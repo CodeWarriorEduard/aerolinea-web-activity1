@@ -37,4 +37,5 @@ public interface VueloRepository extends JpaRepository<Vuelo, Long> {
 
     @Query("select count(v) from Vuelo  v join v.aerolineas a where  a.nombre = :nombre")
     Long numberOfVueloByNameOfAerolinea(String name);
+
 }

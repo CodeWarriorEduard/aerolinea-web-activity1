@@ -1,13 +1,19 @@
 package com.rafael.actividad1.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+@Builder
 @Entity
 @Data
 @Table(name = "aerolineas")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Aerolinea {
 
     @Id
