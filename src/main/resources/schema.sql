@@ -12,7 +12,7 @@ INSERT INTO aerolineas (id, nombre) VALUES
                                         (10, 'EagleFlight');
 
 
-INSERT INTO pasajeros (id, nId, nombre) VALUES
+INSERT INTO pasajeros (id, nid, nombre) VALUES
                                              (1, 'P001', 'Juan Perez'),
                                              (2, 'P002', 'Maria Lopez'),
                                              (3, 'P003', 'Carlos Gomez'),
@@ -76,3 +76,12 @@ INSERT INTO vuelos_aerolineas (aerolinea_id, vuelo_id) VALUES
                                                            (9, 9),
                                                            (10, 10);
 
+
+INSERT INTO vuelos (id, numero_vuelo, destino, origen)
+VALUES (11, gen_random_uuid(), 'Miami', 'Los Angeles');
+
+
+INSERT INTO vuelos_aerolineas (aerolinea_id, vuelo_id)
+VALUES
+    (1, 11),  -- AeroJet
+    (2, 11);  -- SkyHigh Airlines

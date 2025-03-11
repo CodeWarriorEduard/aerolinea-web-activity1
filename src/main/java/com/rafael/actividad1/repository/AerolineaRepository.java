@@ -13,14 +13,14 @@ public interface AerolineaRepository extends JpaRepository<Aerolinea, Long> {
     Optional<Aerolinea> findById(Long id);
     Aerolinea save(Aerolinea aerolinea);
     List<Aerolinea> findAll();
-    Long countBy();
+    Optional<Aerolinea> findByNombre(String nombre);
 
 
     @Query("select aerolinea from Aerolinea aerolinea where aerolinea.nombre like concat('A', '%')")
     List<Aerolinea> aerolineaStartsWithA();
 
     @Query("select distinct  aerolineas from Aerolinea  aerolineas join  aerolineas.vuelos v join v.reservas r join r.pasajero p where p.nombre = :nombre")
-    List<Aerolinea> findAerolineaByPassengerName(String name);
+    List<Aerolinea> findAerolineaByPassengerName(String nombre);
 
     @Query("select aerolineas from Aerolinea aerolineas join aerolineas.vuelos v group by aerolineas having count(*) = 2")
     List<Aerolinea> aerolineasWithTwoFlightsx();
