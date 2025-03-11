@@ -3,10 +3,6 @@ package com.rafael.actividad1.repository;
 import com.rafael.actividad1.config.TestContainerConfig;
 import com.rafael.actividad1.entity.Aerolinea;
 import jakarta.transaction.Transactional;
-import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Assertions;
-import static  org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -16,12 +12,13 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.jdbc.Sql;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.*;
 
-@Slf4j
+
+
 @Import(TestContainerConfig.class)
 @Testcontainers
 @AutoConfigureTestDatabase(replace =  AutoConfigureTestDatabase.Replace.NONE)

@@ -39,16 +39,18 @@ INSERT INTO pasaportes (id, pasajero_id, numero) VALUES
 
 
 INSERT INTO vuelos (id, numero_vuelo, destino, origen) VALUES
-                                                           (1, gen_random_uuid(), 'Nueva York', 'Madrid'),
-                                                           (2, gen_random_uuid(), 'Londres', 'Paris'),
-                                                           (3, gen_random_uuid(), 'Tokio', 'Los Angeles'),
-                                                           (4, gen_random_uuid(), 'Buenos Aires', 'Santiago'),
-                                                           (5, gen_random_uuid(), 'Berlin', 'Roma'),
-                                                           (6, gen_random_uuid(), 'Sidney', 'Singapur'),
-                                                           (7, gen_random_uuid(), 'Toronto', 'Mexico DF'),
-                                                           (8, gen_random_uuid(), 'Moscú', 'Estambul'),
-                                                           (9, gen_random_uuid(), 'Dubai', 'Bangkok'),
-                                                           (10, gen_random_uuid(), 'Seúl', 'Hong Kong');
+                                                           (1, '8a10a6d9-5b1b-47fd-8718-240441d6430e', 'Nueva York', 'Madrid'),
+                                                           (2, 'c8b6762f-3082-43af-9e2a-75b3d21d0d8c', 'Londres', 'Paris'),
+                                                           (3, '133c036a-4b19-4e6f-8047-c00911d4714d', 'Tokio', 'Los Angeles'),
+                                                           (4, 'c617102a-9d57-41e5-bc2b-3729b009111b', 'Buenos Aires', 'Santiago'),
+                                                           (5, '06cbdb78-4a18-4a70-a841-14b98be92d33', 'Berlin', 'Roma'),
+                                                           (6, '6aee7797-8099-4c41-8da1-27f7e9703b9c', 'Sidney', 'Singapur'),
+                                                           (7, '450e8f5e-bc50-4562-a6d2-e7a3236ff7e7', 'Toronto', 'Mexico DF'),
+                                                           (8, 'adf6cf0e-8cbe-4fc6-8fbc-5a0c5e195925', 'Moscú', 'Estambul'),
+                                                           (9, '85cddd22-ebfa-4e6f-bc5a-89b85e45f1f8', 'Dubai', 'Bangkok'),
+                                                           (10, '01e8c9dd-9fb6-416a-9090-c54a3f9ac747', 'Seúl', 'Hong Kong'),
+                                                           (11, '114e19e3-aec1-423d-b53f-3525a106b450', 'Miami', 'Los Angeles');
+
 
 
 INSERT INTO reservas (id, pasajero_id, vuelo_id, codigo_reserva) VALUES
@@ -77,10 +79,8 @@ INSERT INTO vuelos_aerolineas (aerolinea_id, vuelo_id) VALUES
                                                            (10, 10);
 
 
-INSERT INTO vuelos (id, numero_vuelo, destino, origen)
-VALUES (11, gen_random_uuid(), 'Miami', 'Los Angeles');
 
-
+-- Asociar el nuevo vuelo a dos aerolíneas (ejemplo: AeroJet y SkyHigh Airlines)
 INSERT INTO vuelos_aerolineas (aerolinea_id, vuelo_id)
 VALUES
     (1, 11),  -- AeroJet

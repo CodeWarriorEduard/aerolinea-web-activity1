@@ -14,7 +14,7 @@ public interface VueloRepository extends JpaRepository<Vuelo, Long>{
 
     Optional<Vuelo> findById(Long id);
 
-    Optional<Vuelo> findVueloByAerolineas(Aerolinea aerolinea);
+    List<Vuelo> findVuelosByDestino(String name);
 
     Vuelo save(Vuelo vuelo);
 
@@ -32,10 +32,10 @@ public interface VueloRepository extends JpaRepository<Vuelo, Long>{
     Optional<Vuelo> findVueloByNumeroVuelo(UUID numVuelo);
 
 
-    @Query("select v from Vuelo v where v.destino like concat('%', :letra, '%') ")
-    List<Vuelo> findVueloByOrigenStartsWith(String letra);
+    @Query("select v from Vuelo v where v.destino like concat(:letra, '%') ")
+    List<Vuelo> findVueloByDestinoStartsWith(String letra);
 
     @Query("select count(v) from Vuelo  v join v.aerolineas a where  a.nombre = :nombre")
-    Long numberOfVueloByNameOfAerolinea(String name);
+    Long numberOfVueloByNameOfAerolinea(String nombre);
 
 }
