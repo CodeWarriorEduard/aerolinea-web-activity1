@@ -12,6 +12,6 @@ public class TestContainerConfig {
     @Bean
     @ServiceConnection
     PostgreSQLContainer<?> postgreSQLContainer(){
-        return new PostgreSQLContainer<>(DockerImageName.parse("postgres: latest"));
+        return new PostgreSQLContainer<>(DockerImageName.parse("postgres:latest")).withDatabaseName("postgres").withUsername("testuser").withPassword("testpass");
     }
 }

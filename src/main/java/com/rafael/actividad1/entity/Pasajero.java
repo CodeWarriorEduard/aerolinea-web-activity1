@@ -24,7 +24,7 @@ public class Pasajero {
     @Column(nullable = false)
     private String nombre;
     @Column(nullable = false)
-    private String nId;
+    private String nid;
 
     @OneToOne(mappedBy = "pasajero")
     private Pasaporte pasaporte;

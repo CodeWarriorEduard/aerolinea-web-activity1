@@ -21,8 +21,8 @@ public interface ReservaRepository extends JpaRepository<Reserva, Long> {
 
     int countByVueloId(Long vueloId);
 
-    @Query("select r from Reserva r where r.pasajero.nId =: nId")
-    List<Reserva> findByPasajeroNlId(String nId);
+    @Query("select r from Reserva r where r.pasajero.nid =: nId")
+    List<Reserva> findByPasajeroNid(String nId);
 
     @Query("select r from Reserva r where r.vuelo.id = ?1 and r.pasajero.id =: passangerId")
     Optional<Reserva> findByFlightAndPassenger(Long flightId, Long passengerId);

@@ -19,7 +19,7 @@ public interface PasaporteRepository extends JpaRepository<Pasaporte, Long> {
 
     void deleteByNumero(String numero);
 
-    @Query("select p from Pasaporte p where p.pasajero.nId =: nId")
+    @Query("select p from Pasaporte p where p.pasajero.nid =: nId")
     Optional<Pasaporte> findByPasajeroNId(String nId);
 
     @Query("select p from Pasaporte p where p.numero like %:partialNumber%")

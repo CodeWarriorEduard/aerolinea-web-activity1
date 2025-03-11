@@ -12,11 +12,11 @@ public interface PasajeroRepository extends JpaRepository<Pasajero, Long> {
 
     Optional<Pasajero> findByNombre(String nombre);
 
-    Optional<Pasajero> findByNId(String nId);
+    Optional<Pasajero> findByNid(String nId);
 
     List<Pasajero> findByNombreContaining(String partialName);
 
-    boolean existsByNId(String nId);
+    boolean existsByNid(String nId);
 
     int countByNombre(String nombre);
 
@@ -29,9 +29,9 @@ public interface PasajeroRepository extends JpaRepository<Pasajero, Long> {
     @Query("select count(p) > 0 from Pasajero p where p.pasaporte.id is not null")
     boolean existsWithPasaporte();
 
-    @Query("select p from Pasajero p where p.nId =: nId and p.nombre =: name")
-    Optional<Pasajero> findByNIdAndNombre(String nId, String name);
+    @Query("select p from Pasajero p where p.nid =: nId and p.nombre =: name")
+    Optional<Pasajero> findByNidAndNombre(String nId, String name);
 
-    @Query("delete from Pasajero p where p.nId =: nId")
+    @Query("delete from Pasajero p where p.nid =: nId")
     void deleteByNId(String nId);
 }

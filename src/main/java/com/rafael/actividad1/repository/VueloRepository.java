@@ -9,12 +9,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface VueloRepository extends JpaRepository<Vuelo, Long> {
+public interface VueloRepository extends JpaRepository<Vuelo, Long>{
 
 
     Optional<Vuelo> findById(Long id);
 
-    Optional<Vuelo> findVueloByAerolinea(Aerolinea aerolinea);
+    Optional<Vuelo> findVueloByAerolineas(Aerolinea aerolinea);
 
     Vuelo save(Vuelo vuelo);
 
