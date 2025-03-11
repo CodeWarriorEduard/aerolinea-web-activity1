@@ -76,7 +76,7 @@ class VueloRepositoryTest {
         String origen = "Madrid";
         List<Vuelo> vuelosByOrigen = vueloRepository.findVueloByOrigen(origen);
 
-        // Existe un vuelo desde madrid entonces pasará el test
+        // Existe un vuelo desde Madrid entonces pasará el test
         assertFalse(vuelosByOrigen.isEmpty());
 
         for ( Vuelo vuelo: vuelosByOrigen){

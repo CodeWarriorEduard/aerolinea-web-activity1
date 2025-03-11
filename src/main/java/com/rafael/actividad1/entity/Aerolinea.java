@@ -12,8 +12,8 @@ import java.util.List;
 @Entity
 @Data
 @Table(name = "aerolineas")
-//@AllArgsConstructor
-//@NoArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 public class Aerolinea {
 
     @Id

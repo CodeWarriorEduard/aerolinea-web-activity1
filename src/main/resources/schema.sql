@@ -54,16 +54,17 @@ INSERT INTO vuelos (id, numero_vuelo, destino, origen) VALUES
 
 
 INSERT INTO reservas (id, pasajero_id, vuelo_id, codigo_reserva) VALUES
-                                                                     (1, 1, 1, gen_random_uuid()),
-                                                                     (2, 2, 2, gen_random_uuid()),
-                                                                     (3, 3, 3, gen_random_uuid()),
-                                                                     (4, 4, 4, gen_random_uuid()),
-                                                                     (5, 5, 5, gen_random_uuid()),
-                                                                     (6, 6, 6, gen_random_uuid()),
-                                                                     (7, 7, 7, gen_random_uuid()),
-                                                                     (8, 8, 8, gen_random_uuid()),
-                                                                     (9, 9, 9, gen_random_uuid()),
-                                                                     (10, 10, 10, gen_random_uuid());
+                                                                     (1, 1, 1, '550e8400-e29b-41d4-a716-446655440001'),
+                                                                     (2, 2, 2, '550e8400-e29b-41d4-a716-446655440002'),
+                                                                     (3, 3, 3, '550e8400-e29b-41d4-a716-446655440003'),
+                                                                     (4, 4, 4, '550e8400-e29b-41d4-a716-446655440004'),
+                                                                     (5, 5, 5, '550e8400-e29b-41d4-a716-446655440005'),
+                                                                     (6, 6, 6, '550e8400-e29b-41d4-a716-446655440006'),
+                                                                     (7, 7, 7, '550e8400-e29b-41d4-a716-446655440007'),
+                                                                     (8, 8, 8, '550e8400-e29b-41d4-a716-446655440008'),
+                                                                     (9, 9, 9, '550e8400-e29b-41d4-a716-446655440009'),
+                                                                     (10, 10, 10, '550e8400-e29b-41d4-a716-446655440010');
+
 
 
 INSERT INTO vuelos_aerolineas (aerolinea_id, vuelo_id) VALUES
