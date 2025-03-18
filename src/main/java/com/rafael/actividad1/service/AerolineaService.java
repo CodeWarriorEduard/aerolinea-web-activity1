@@ -12,5 +12,9 @@ public interface AerolineaService {
     Aerolinea saveAerolinea(Aerolinea aerolinea);
     List<Aerolinea> findAllAerolineasInDb();
     Optional<Aerolinea> findAerolineaByNombre(String nombre);
-
+    List<Aerolinea> aerolineaStartsWithA();
+    List<Aerolinea> findAerolineaByPassengerName(String nombre);
+    List<Aerolinea> aerolineasWithTwoFlightsx();
+    List<Aerolinea> findAllOrderedByName();
+    Long countAllAerolineas();
 }

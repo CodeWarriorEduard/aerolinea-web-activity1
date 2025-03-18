@@ -4,8 +4,10 @@ import com.rafael.actividad1.entity.Aerolinea;
 import com.rafael.actividad1.repository.AerolineaRepository;
 import com.rafael.actividad1.service.AerolineaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,22 +38,46 @@ public class AerolineaServiceImpl implements AerolineaService {
 
     @Override
     public Optional<Aerolinea> findAerolineaById(Long id) {
-
-        return ;
+        return aerolineaRepository.findById(id);
     }
 
     @Override
     public Aerolinea saveAerolinea(Aerolinea aerolinea) {
-        return null;
+        return aerolineaRepository.save(aerolinea);
     }
 
     @Override
     public List<Aerolinea> findAllAerolineasInDb() {
-        return List.of();
+        return aerolineaRepository.findAll();
     }
 
     @Override
     public Optional<Aerolinea> findAerolineaByNombre(String nombre) {
-        return Optional.empty();
+        return aerolineaRepository.findByNombre(nombre);
+    }
+
+    @Override
+    public List<Aerolinea> aerolineaStartsWithA() {
+        return aerolineaRepository.aerolineaStartsWithA();
+    }
+
+    @Override
+    public List<Aerolinea> findAerolineaByPassengerName(String nombre) {
+        return aerolineaRepository.findAerolineaByPassengerName(nombre);
+    }
+
+    @Override
+    public List<Aerolinea> aerolineasWithTwoFlightsx() {
+        return aerolineaRepository.aerolineasWithTwoFlightsx();
+    }
+
+    @Override
+    public List<Aerolinea> findAllOrderedByName() {
+        return aerolineaRepository.findAllOrderedByName();
+    }
+
+    @Override
+    public Long countAllAerolineas() {
+        return aerolineaRepository.countAllAerolineas();
     }
 }

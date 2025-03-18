@@ -1,5 +1,6 @@
 package com.rafael.actividad1.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,6 +24,7 @@ public class Aerolinea {
     private String nombre;
 
     @ManyToMany(mappedBy = "aerolineas")
+    @JsonIgnore
     private List<Vuelo> vuelos;
 
 
