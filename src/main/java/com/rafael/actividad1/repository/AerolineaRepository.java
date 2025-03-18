@@ -25,7 +25,7 @@ public interface AerolineaRepository extends JpaRepository<Aerolinea, Long> {
     @Query("select aerolineas from Aerolinea aerolineas join aerolineas.vuelos v group by aerolineas having count(*) = 2")
     List<Aerolinea> aerolineasWithTwoFlightsx();
 
-    @Query("select aerolineas from Aerolinea aerolineas order by  aerolineas.nombre")
+    @Query("select aerolineas from Aerolinea aerolineas order by aerolineas.nombre asc")
     List<Aerolinea> findAllOrderedByName();
 
     @Query("select count(aerolineas) from Aerolinea  aerolineas")
