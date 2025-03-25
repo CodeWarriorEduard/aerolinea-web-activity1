@@ -1,7 +1,6 @@
 package com.rafael.actividad1.service.impl;
 
-import com.rafael.actividad1.dto.pasajero.PasaporteDTO;
-import com.rafael.actividad1.dto.pasaporte.PasajeroDTO;
+import com.rafael.actividad1.dto.pasajero.PasajeroDTO;
 import com.rafael.actividad1.entity.Pasajero;
 import com.rafael.actividad1.exceptions.ResourceNotFoundException;
 import com.rafael.actividad1.mapper.PasajeroMapper;

@@ -1,7 +1,6 @@
 package com.rafael.actividad1.mapper;
 
-import com.rafael.actividad1.dto.pasajero.PasaporteDTO;
-import com.rafael.actividad1.dto.pasaporte.PasajeroDTO;
+import com.rafael.actividad1.dto.pasaporte.PasaporteDTO;
 import com.rafael.actividad1.entity.Pasaporte;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

@@ -1,7 +1,6 @@
 package com.rafael.actividad1.service;
 
-import com.rafael.actividad1.dto.pasajero.PasaporteDTO;
-import com.rafael.actividad1.dto.pasaporte.PasajeroDTO;
+import com.rafael.actividad1.dto.pasajero.PasajeroDTO;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;

@@ -30,7 +30,7 @@ public interface PasajeroRepository extends JpaRepository<Pasajero, Long> {
     List<Pasajero> searchByPartialName(String partialName);
 
     @Query("select count(p) > 0 from Pasajero p where p.pasaporte.id is not null")
-    boolean existsWithPasaporte();
+    boolean existsWithPasaporte(); //este metodo verifica que exista al menos un pasajero con pasaporte
 
     @Query("select p from Pasajero p where p.nid =:nid and p.nombre =:name")
     Optional<Pasajero> findByNidAndNombre(@Param("nid") String nid,@Param("name") String name);
