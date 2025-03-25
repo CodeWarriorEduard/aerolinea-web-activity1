@@ -1,11 +1,10 @@
 package com.rafael.actividad1.service;
 
-import com.rafael.actividad1.dto.pasajero.PasajeroDTO;
-import com.rafael.actividad1.entity.Pasajero;
+import com.rafael.actividad1.dto.pasajero.PasaporteDTO;
+import com.rafael.actividad1.dto.pasaporte.PasajeroDTO;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface PasajeroService {
     PasajeroDTO findByNombre(String nombre);

@@ -1,13 +1,11 @@
 package com.rafael.actividad1.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
-@Data
+@Getter
+@Setter
 @Table(name = "pasaportes")
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,5 +21,4 @@ public class Pasaporte {
     @OneToOne
     @JoinColumn(name = "pasajero_id", referencedColumnName = "id", unique = true)
     private Pasajero pasajero;
-
 }
