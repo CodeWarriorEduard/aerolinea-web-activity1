@@ -1,6 +1,6 @@
 package com.rafael.actividad1.service.impl;
 
-import com.rafael.actividad1.dto.pasajero.PasajeroDTO;
+import com.rafael.actividad1.dto.request.PasajeroRequestDTO;
 import com.rafael.actividad1.entity.Pasajero;
 import com.rafael.actividad1.exceptions.ResourceNotFoundException;
 import com.rafael.actividad1.mapper.PasajeroMapper;
@@ -27,19 +27,19 @@ public class PasajeroServiceImpl implements PasajeroService {
     }
 
     @Override
-    public PasajeroDTO findByNombre(String nombre) {
+    public PasajeroRequestDTO findByNombre(String nombre) {
         Pasajero pasajero = pasajeroRepository.findByNombre(nombre).orElseThrow(()->new ResourceNotFoundException("No se encontro el pasajero"));
         return pasajeroMapper.pasajeroToPasajeroDTO(pasajero);
     }
 
     @Override
-    public PasajeroDTO findByNid(String nId) {
+    public PasajeroRequestDTO findByNid(String nId) {
         Pasajero pasajero = pasajeroRepository.findByNid(nId).orElseThrow(()->new ResourceNotFoundException("No se encontro el pasajero"));
         return pasajeroMapper.pasajeroToPasajeroDTO(pasajero);
     }
 
     @Override
-    public List<PasajeroDTO> findByNombreContaining(String partialName) {
+    public List<PasajeroRequestDTO> findByNombreContaining(String partialName) {
         List<Pasajero> pasajeros = pasajeroRepository.findByNombreContaining(partialName);
         if (pasajeros.isEmpty()) {
             throw new ResourceNotFoundException("No se encontraron pasajeros con ese nombre");
@@ -60,13 +60,13 @@ public class PasajeroServiceImpl implements PasajeroService {
     }
 
     @Override
-    public PasajeroDTO findByPasaporteNumero(String passportNumber) {
+    public PasajeroRequestDTO findByPasaporteNumero(String passportNumber) {
         Pasajero pasajero = pasajeroRepository.findByPasaporteNumero(passportNumber).orElseThrow(()->new ResourceNotFoundException("No se encontro el pasajero"));
         return pasajeroMapper.pasajeroToPasajeroDTO(pasajero);
     }
 
     @Override
-    public List<PasajeroDTO> searchByPartialName(String partialName) {
+    public List<PasajeroRequestDTO> searchByPartialName(String partialName) {
         List<Pasajero> pasajeros = pasajeroRepository.searchByPartialName(partialName);
         if (pasajeros.isEmpty()) {
             throw new ResourceNotFoundException("No se encontraron pasajeros con ese nombre");
@@ -82,7 +82,7 @@ public class PasajeroServiceImpl implements PasajeroService {
     }
 
     @Override
-    public PasajeroDTO findByNidAndNombre(String nid, String name) {
+    public PasajeroRequestDTO findByNidAndNombre(String nid, String name) {
         Pasajero pasajero = pasajeroRepository.findByNidAndNombre(nid,name).orElseThrow(()->new ResourceNotFoundException("No se encontro el pasajero"));
         return pasajeroMapper.pasajeroToPasajeroDTO(pasajero);
     }

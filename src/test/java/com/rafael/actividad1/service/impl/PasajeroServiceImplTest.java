@@ -1,11 +1,10 @@
 package com.rafael.actividad1.service.impl;
 
-import com.rafael.actividad1.dto.pasajero.PasajeroDTO;
-import com.rafael.actividad1.dto.pasaporte.PasaporteDTO;
+import com.rafael.actividad1.dto.request.PasajeroRequestDTO;
+import com.rafael.actividad1.dto.request.PasaporteRequestDTO;
 import com.rafael.actividad1.entity.Pasajero;
 import com.rafael.actividad1.entity.Pasaporte;
 import com.rafael.actividad1.mapper.PasajeroMapper;
-import com.rafael.actividad1.mapper.PasaporteMapper;
 import com.rafael.actividad1.repository.PasajeroRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -39,11 +38,11 @@ class PasajeroServiceImplTest {
                 .nid("1a")
                 .nombre(nombre)
                 .build();
-        PasajeroDTO pasajeroDTO = new PasajeroDTO(nombre,"1a",null);
+        PasajeroRequestDTO pasajeroDTO = new PasajeroRequestDTO(nombre,"1a",null);
 
         when(pasajeroRepository.findByNombre(nombre)).thenReturn(Optional.of(pasajero));
         when(pasajeroMapper.pasajeroToPasajeroDTO(pasajero)).thenReturn(pasajeroDTO);
-        PasajeroDTO findedPasajeroDTO = pasajeroServiceImpl.findByNombre(nombre);
+        PasajeroRequestDTO findedPasajeroDTO = pasajeroServiceImpl.findByNombre(nombre);
         assertTrue(findedPasajeroDTO.nid().equals("1a"));
         verify(pasajeroRepository, times(1)).findByNombre(nombre);
     }
@@ -56,11 +55,11 @@ class PasajeroServiceImplTest {
                 .nid(nid)
                 .nombre("pollo test")
                 .build();
-        PasajeroDTO pasajeroDTO = new PasajeroDTO("pollo test",nid,null);
+        PasajeroRequestDTO pasajeroDTO = new PasajeroRequestDTO("pollo test",nid,null);
 
         when(pasajeroRepository.findByNid(nid)).thenReturn(Optional.of(pasajero));
         when(pasajeroMapper.pasajeroToPasajeroDTO(pasajero)).thenReturn(pasajeroDTO);
-        PasajeroDTO findedPasajeroDTO = pasajeroServiceImpl.findByNid(nid);
+        PasajeroRequestDTO findedPasajeroDTO = pasajeroServiceImpl.findByNid(nid);
         assertTrue(findedPasajeroDTO.nid().equals(nid));
         verify(pasajeroRepository, times(1)).findByNid(nid);
     }
@@ -74,13 +73,13 @@ class PasajeroServiceImplTest {
         Pasajero pasajero2 = Pasajero.builder()
                 .nombre("pollo test2")
                 .build();
-        PasajeroDTO pasajeroDTO = new PasajeroDTO("pollo test",null,null);
-        PasajeroDTO pasajeroDTO2 = new PasajeroDTO("pollo test2",null,null);
+        PasajeroRequestDTO pasajeroDTO = new PasajeroRequestDTO("pollo test",null,null);
+        PasajeroRequestDTO pasajeroDTO2 = new PasajeroRequestDTO("pollo test2",null,null);
 
         when(pasajeroRepository.findByNombreContaining("pollo")).thenReturn(List.of(pasajero, pasajero2));
         when(pasajeroMapper.pasajeroToPasajeroDTO(pasajero)).thenReturn(pasajeroDTO);
         when(pasajeroMapper.pasajeroToPasajeroDTO(pasajero2)).thenReturn(pasajeroDTO2);
-        List<PasajeroDTO> findedPasajerosDTOs = pasajeroServiceImpl.findByNombreContaining("pollo");
+        List<PasajeroRequestDTO> findedPasajerosDTOs = pasajeroServiceImpl.findByNombreContaining("pollo");
         assertTrue(findedPasajerosDTOs.size() == 2);
         verify(pasajeroRepository, times(1)).findByNombreContaining("pollo");
     }
@@ -115,12 +114,12 @@ class PasajeroServiceImplTest {
                 .pasajero(pasajero)
                 .build();
         pasajero.setPasaporte(pasaporte);
-        PasaporteDTO pasaporteDTO = new PasaporteDTO("1ab",null);
-        PasajeroDTO pasajeroDTO = new PasajeroDTO(nombre,"1a",pasaporteDTO);
+        PasaporteRequestDTO pasaporteRequestDTO = new PasaporteRequestDTO("1ab",null);
+        PasajeroRequestDTO pasajeroDTO = new PasajeroRequestDTO(nombre,"1a", pasaporteRequestDTO);
         when(pasajeroMapper.pasajeroToPasajeroDTO(pasajero)).thenReturn(pasajeroDTO);
         when(pasajeroRepository.findByPasaporteNumero("1ab")).thenReturn(Optional.of(pasajero));
 
-        PasajeroDTO findedPasajeroDTO = pasajeroServiceImpl.findByPasaporteNumero("1ab");
+        PasajeroRequestDTO findedPasajeroDTO = pasajeroServiceImpl.findByPasaporteNumero("1ab");
         assertTrue(findedPasajeroDTO.nid().equals(pasajero.getNid()));
         verify(pasajeroRepository, times(1)).findByPasaporteNumero("1ab");
 
@@ -134,13 +133,13 @@ class PasajeroServiceImplTest {
         Pasajero pasajero2 = Pasajero.builder()
                 .nombre("pollo test2")
                 .build();
-        PasajeroDTO pasajeroDTO = new PasajeroDTO("pollo test",null,null);
-        PasajeroDTO pasajeroDTO2 = new PasajeroDTO("pollo test2",null,null);
+        PasajeroRequestDTO pasajeroDTO = new PasajeroRequestDTO("pollo test",null,null);
+        PasajeroRequestDTO pasajeroDTO2 = new PasajeroRequestDTO("pollo test2",null,null);
 
         when(pasajeroRepository.searchByPartialName("pollo")).thenReturn(List.of(pasajero, pasajero2));
         when(pasajeroMapper.pasajeroToPasajeroDTO(pasajero)).thenReturn(pasajeroDTO);
         when(pasajeroMapper.pasajeroToPasajeroDTO(pasajero2)).thenReturn(pasajeroDTO2);
-        List<PasajeroDTO> findedPasajerosDTOs = pasajeroServiceImpl.searchByPartialName("pollo");
+        List<PasajeroRequestDTO> findedPasajerosDTOs = pasajeroServiceImpl.searchByPartialName("pollo");
         assertTrue(findedPasajerosDTOs.size() == 2);
         verify(pasajeroRepository, times(1)).searchByPartialName("pollo");
     }
@@ -162,11 +161,11 @@ class PasajeroServiceImplTest {
                 .nid("1a")
                 .nombre(nombre)
                 .build();
-        PasajeroDTO pasajeroDTO = new PasajeroDTO(nombre,"1a",null);
+        PasajeroRequestDTO pasajeroDTO = new PasajeroRequestDTO(nombre,"1a",null);
 
         when(pasajeroRepository.findByNidAndNombre("1a",nombre)).thenReturn(Optional.of(pasajero));
         when(pasajeroMapper.pasajeroToPasajeroDTO(pasajero)).thenReturn(pasajeroDTO);
-        PasajeroDTO findedPasajeroDTO = pasajeroServiceImpl.findByNidAndNombre("1a",nombre);
+        PasajeroRequestDTO findedPasajeroDTO = pasajeroServiceImpl.findByNidAndNombre("1a",nombre);
         assertTrue(findedPasajeroDTO.nid().equals("1a"));
         verify(pasajeroRepository, times(1)).findByNidAndNombre("1a",nombre);
     }

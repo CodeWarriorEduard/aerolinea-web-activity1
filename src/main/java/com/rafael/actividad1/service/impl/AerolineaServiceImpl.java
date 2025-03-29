@@ -1,6 +1,10 @@
 package com.rafael.actividad1.service.impl;
 
+import com.rafael.actividad1.dto.request.AerolineaRequestDTO;
+import com.rafael.actividad1.dto.response.AerolineaResponseDTO;
 import com.rafael.actividad1.entity.Aerolinea;
+import com.rafael.actividad1.exceptions.AerolineaNotFoundException;
+import com.rafael.actividad1.mapper.AerolineaMapper;
 import com.rafael.actividad1.repository.AerolineaRepository;
 import com.rafael.actividad1.service.AerolineaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +20,9 @@ public class AerolineaServiceImpl implements AerolineaService {
 
     @Autowired
     private final AerolineaRepository aerolineaRepository;
+
+    @Autowired
+    AerolineaMapper aerolineaMapper;
 
     public AerolineaServiceImpl(AerolineaRepository aerolineaRepository) {
         this.aerolineaRepository = aerolineaRepository;
@@ -36,19 +43,22 @@ public class AerolineaServiceImpl implements AerolineaService {
             return success;
     }
 
+    // Retornamos en vez de un optional un dto
     @Override
-    public Optional<Aerolinea> findAerolineaById(Long id) {
-        return aerolineaRepository.findById(id);
+    public AerolineaResponseDTO findAerolineaById(Long id) {
+        Aerolinea aerolinea = aerolineaRepository.findById(id).orElseThrow(()-> new AerolineaNotFoundException("Aerolinea no encontrada"));
+        return aerolineaMapper.aerolineaResponseDto(aerolinea);
     }
 
     @Override
-    public Aerolinea saveAerolinea(Aerolinea aerolinea) {
-        return aerolineaRepository.save(aerolinea);
+    public AerolineaResponseDTO saveAerolinea(Aerolinea aerolinea) {
+        return aerolineaMapper.aerolineaResponseDto(aerolineaRepository.save(aerolinea));
     }
 
     @Override
-    public List<Aerolinea> findAllAerolineasInDb() {
-        return aerolineaRepository.findAll();
+    public List<AerolineaResponseDTO> findAllAerolineasInDb() {
+        List<Aerolinea> aerolineas = aerolineaRepository.findAll();
+        return aerolineaMapper.aerolineaResponseDtoList(aerolineas);
     }
 
     @Override

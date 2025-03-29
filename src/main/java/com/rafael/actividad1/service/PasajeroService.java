@@ -1,19 +1,19 @@
 package com.rafael.actividad1.service;
 
-import com.rafael.actividad1.dto.pasajero.PasajeroDTO;
+import com.rafael.actividad1.dto.request.PasajeroRequestDTO;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
 public interface PasajeroService {
-    PasajeroDTO findByNombre(String nombre);
-    PasajeroDTO findByNid(String nId);
-    List<PasajeroDTO> findByNombreContaining(String partialName);
+    PasajeroRequestDTO findByNombre(String nombre);
+    PasajeroRequestDTO findByNid(String nId);
+    List<PasajeroRequestDTO> findByNombreContaining(String partialName);
     boolean existsByNid(String nId);
     int countByNombre(String nombre);
-    PasajeroDTO findByPasaporteNumero(String passportNumber);
-    List<PasajeroDTO> searchByPartialName(String partialName);
+    PasajeroRequestDTO findByPasaporteNumero(String passportNumber);
+    List<PasajeroRequestDTO> searchByPartialName(String partialName);
     boolean existsWithPasaporte();
-    PasajeroDTO findByNidAndNombre(@Param("nid") String nid, @Param("name") String name);
+    PasajeroRequestDTO findByNidAndNombre(@Param("nid") String nid, @Param("name") String name);
     boolean deleteByNId(String nId);
 }

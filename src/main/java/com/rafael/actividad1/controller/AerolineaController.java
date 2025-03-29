@@ -1,10 +1,11 @@
 package com.rafael.actividad1.controller;
 
+import com.rafael.actividad1.dto.response.AerolineaResponseDTO;
 import com.rafael.actividad1.entity.Aerolinea;
+import com.rafael.actividad1.response.DefaultApiResponse;
 import com.rafael.actividad1.service.AerolineaService;
-import org.apache.coyote.Response;
+import com.rafael.actividad1.service.impl.AerolineaServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,20 +24,42 @@ public class AerolineaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Aerolinea> obtenerAerolineaPorId(@PathVariable Long id){
-        Optional<Aerolinea> response = aerolineaService.findAerolineaById(id);
-        return response.isPresent()? ResponseEntity.ok().body(response.get()): ResponseEntity.notFound().build();
+    public ResponseEntity<DefaultApiResponse<AerolineaResponseDTO>> obtenerAerolineaPorId(@PathVariable Long id){
+
+        AerolineaResponseDTO response = aerolineaService.findAerolineaById(id);
+
+        DefaultApiResponse<AerolineaResponseDTO> apiResponse = new DefaultApiResponse<>(
+                "OK",
+                "Aerolinea encontrada",
+                response,
+                null
+        );
+        return ResponseEntity.ok().body(apiResponse);
     }
 
     @PostMapping("/guardar")
-    public Aerolinea guardarAerolinea(@RequestBody Aerolinea aerolinea){ // Reemplazar con dtos
-        return aerolineaService.saveAerolinea(aerolinea);
+    public ResponseEntity<DefaultApiResponse<AerolineaResponseDTO>> guardarAerolinea(@RequestBody Aerolinea aerolinea){ // Reemplazar con dtos
+
+        AerolineaResponseDTO responseDTO =  aerolineaService.saveAerolinea(aerolinea);
+        DefaultApiResponse<AerolineaResponseDTO> apiResponse = new DefaultApiResponse<>(
+                "OK",
+                "Aerolinea Guardada",
+                responseDTO,
+                null
+        );
+        return ResponseEntity.ok(apiResponse);
     }
 
     @GetMapping("/todas")
-    public ResponseEntity<List<Aerolinea>> obtenerTodasLasAerolineas(){
-        List<Aerolinea> response = aerolineaService.findAllAerolineasInDb();
-        return response.isEmpty()? ResponseEntity.noContent().build(): ResponseEntity.ok().body(response);
+    public ResponseEntity<DefaultApiResponse<List<AerolineaResponseDTO>>> obtenerTodasLasAerolineas(){
+        List<AerolineaResponseDTO> response = aerolineaService.findAllAerolineasInDb();
+        DefaultApiResponse<List<AerolineaResponseDTO>> apiResponse = new DefaultApiResponse<>(
+                "OK",
+                "Aerolinea Guardada",
+                response,
+                null
+        );
+        return response.isEmpty()? ResponseEntity.noContent().build(): ResponseEntity.ok().body(apiResponse);
     }
 
     @GetMapping("/por-nombre")

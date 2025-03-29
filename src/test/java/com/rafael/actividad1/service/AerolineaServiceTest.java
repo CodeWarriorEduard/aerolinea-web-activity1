@@ -1,9 +1,12 @@
 package com.rafael.actividad1.service;
 
+import com.rafael.actividad1.dto.request.AerolineaRequestDTO;
+import com.rafael.actividad1.dto.response.AerolineaResponseDTO;
 import com.rafael.actividad1.entity.Aerolinea;
 import com.rafael.actividad1.entity.Pasajero;
 import com.rafael.actividad1.entity.Reserva;
 import com.rafael.actividad1.entity.Vuelo;
+import com.rafael.actividad1.exceptions.AerolineaNotFoundException;
 import com.rafael.actividad1.repository.AerolineaRepository;
 import com.rafael.actividad1.service.impl.AerolineaServiceImpl;
 import org.junit.jupiter.api.Test;
@@ -81,9 +84,11 @@ class AerolineaServiceTest {
 
         when(aerolineaRepository.findById(id)).thenReturn(Optional.of(aerolinea));
 
-        Optional<Aerolinea> response = aerolineaService.findAerolineaById(id);
+        AerolineaResponseDTO response = aerolineaService.findAerolineaById(id);
 
-        assertTrue(response.isPresent());
+        assertEquals(response.nombre(), aerolinea.getNombre());
+
+        doThrow(AerolineaNotFoundException.class);
 
         verify(aerolineaRepository, times(1)).findById(id);
 
@@ -100,9 +105,9 @@ class AerolineaServiceTest {
 
         when(aerolineaRepository.save(aerolinea)).thenReturn(aerolinea);
 
-        Aerolinea response = aerolineaService.saveAerolinea(aerolinea);
+        AerolineaResponseDTO response = aerolineaService.saveAerolinea(aerolinea);
 
-        assertEquals(aerolinea, response);
+        assertEquals(aerolinea.getNombre(), response.nombre());
         verify(aerolineaRepository).save(aerolinea);
 
     }
@@ -130,7 +135,7 @@ class AerolineaServiceTest {
 
         when(aerolineaRepository.findAll()).thenReturn(aerolineas);
 
-        List<Aerolinea> response = aerolineaService.findAllAerolineasInDb();
+        List<AerolineaResponseDTO> response = aerolineaService.findAllAerolineasInDb();
 
         assertEquals(aerolineas, response);
 
@@ -298,65 +303,66 @@ class AerolineaServiceTest {
 
     @Test
     void countAllAerolineasTest(){
-//        Aerolinea aerolinea1 = Aerolinea.builder()
-//                .id(114L)
-//                .nombre("Avianca")
-//                .vuelos(List.of())
-//                .build();
-//
-//        Aerolinea aerolinea2 = Aerolinea.builder()
-//                .id(115L)
-//                .nombre("Emirates")
-//                .vuelos(List.of())
-//                .build();
-//
-//        Aerolinea aerolinea3 = Aerolinea.builder()
-//                .id(116L)
-//                .nombre("Delta Airlines")
-//                .vuelos(List.of())
-//                .build();
-//
-//        Aerolinea aerolinea4 = Aerolinea.builder()
-//                .id(117L)
-//                .nombre("LATAM")
-//                .vuelos(List.of())
-//                .build();
-//
-//        Aerolinea aerolinea5 = Aerolinea.builder()
-//                .id(118L)
-//                .nombre("American Airlines")
-//                .vuelos(List.of())
-//                .build();
-//
-//        Aerolinea aerolinea6 = Aerolinea.builder()
-//                .id(119L)
-//                .nombre("Turkish Airlines")
-//                .vuelos(List.of())
-//                .build();
-//
-//        Aerolinea aerolinea7 = Aerolinea.builder()
-//                .id(120L)
-//                .nombre("Qatar Airways")
-//                .vuelos(List.of())
-//                .build();
-//
-//        List<Aerolinea> aerolineas = List.of(
-//                aerolinea2,
-//                aerolinea1,
-//                aerolinea4,
-//                aerolinea3,
-//                aerolinea7,
-//                aerolinea5,
-//                aerolinea6
-//        );
+        Aerolinea aerolinea1 = Aerolinea.builder()
+                .id(114L)
+                .nombre("Avianca")
+                .vuelos(List.of())
+                .build();
 
-        //XD
+        Aerolinea aerolinea2 = Aerolinea.builder()
+                .id(115L)
+                .nombre("Emirates")
+                .vuelos(List.of())
+                .build();
+
+        Aerolinea aerolinea3 = Aerolinea.builder()
+                .id(116L)
+                .nombre("Delta Airlines")
+                .vuelos(List.of())
+                .build();
+
+        Aerolinea aerolinea4 = Aerolinea.builder()
+                .id(117L)
+                .nombre("LATAM")
+                .vuelos(List.of())
+                .build();
+
+        Aerolinea aerolinea5 = Aerolinea.builder()
+                .id(118L)
+                .nombre("American Airlines")
+                .vuelos(List.of())
+                .build();
+
+        Aerolinea aerolinea6 = Aerolinea.builder()
+                .id(119L)
+                .nombre("Turkish Airlines")
+                .vuelos(List.of())
+                .build();
+
+        Aerolinea aerolinea7 = Aerolinea.builder()
+                .id(120L)
+                .nombre("Qatar Airways")
+                .vuelos(List.of())
+                .build();
+
+        List<Aerolinea> aerolineas = List.of(
+                aerolinea2,
+                aerolinea1,
+                aerolinea4,
+                aerolinea3,
+                aerolinea7,
+                aerolinea5,
+                aerolinea6
+        );
+
 
         when(aerolineaRepository.countAllAerolineas()).thenReturn(7L);
 
         Long count = aerolineaService.countAllAerolineas();
 
-        assertEquals(7L, count);
+        System.out.println(count);
+
+        assertEquals(aerolineas.size(), count);
         verify(aerolineaRepository, times(1)).countAllAerolineas();
 
     }
