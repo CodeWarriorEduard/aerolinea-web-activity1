@@ -3,9 +3,7 @@ package com.rafael.actividad1.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Getter
@@ -28,5 +26,5 @@ public class Pasajero {
     private Pasaporte pasaporte;
 
     @OneToMany(mappedBy = "pasajero")
-    private List<Reserva> reserva;
+    private List<Reserva> reservas;
 }

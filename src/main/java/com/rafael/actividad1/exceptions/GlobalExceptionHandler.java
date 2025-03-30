@@ -1,6 +1,5 @@
 package com.rafael.actividad1.exceptions;
 
-import com.rafael.actividad1.entity.Aerolinea;
 import com.rafael.actividad1.response.DefaultApiResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

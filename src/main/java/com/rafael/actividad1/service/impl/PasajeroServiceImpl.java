@@ -1,8 +1,8 @@
 package com.rafael.actividad1.service.impl;
 
-import com.rafael.actividad1.dto.request.PasajeroRequestDTO;
+import com.rafael.actividad1.dto.response.PasajeroResponseDTO;
 import com.rafael.actividad1.entity.Pasajero;
-import com.rafael.actividad1.exceptions.ResourceNotFoundException;
+import com.rafael.actividad1.exceptions.PasajeroNotFoundException;
 import com.rafael.actividad1.mapper.PasajeroMapper;
 import com.rafael.actividad1.repository.PasajeroRepository;
 import com.rafael.actividad1.service.PasajeroService;
@@ -17,9 +17,9 @@ import java.util.stream.Collectors;
 public class PasajeroServiceImpl implements PasajeroService {
 
 
-    private PasajeroRepository pasajeroRepository;
+    private final PasajeroRepository pasajeroRepository;
 
-    private PasajeroMapper pasajeroMapper;
+    private final PasajeroMapper pasajeroMapper;
     @Autowired
     public PasajeroServiceImpl(PasajeroRepository pasajeroRepository, PasajeroMapper pasajeroMapper) {
         this.pasajeroRepository = pasajeroRepository;
@@ -27,25 +27,22 @@ public class PasajeroServiceImpl implements PasajeroService {
     }
 
     @Override
-    public PasajeroRequestDTO findByNombre(String nombre) {
-        Pasajero pasajero = pasajeroRepository.findByNombre(nombre).orElseThrow(()->new ResourceNotFoundException("No se encontro el pasajero"));
-        return pasajeroMapper.pasajeroToPasajeroDTO(pasajero);
+    public PasajeroResponseDTO findByNombre(String nombre) {
+        Pasajero pasajero = pasajeroRepository.findByNombre(nombre).orElseThrow(()->new PasajeroNotFoundException("No se encontro un pasajero con el nombre: " + nombre));
+        return pasajeroMapper.pasajeroToPasajeroResponseDTO(pasajero);
     }
 
     @Override
-    public PasajeroRequestDTO findByNid(String nId) {
-        Pasajero pasajero = pasajeroRepository.findByNid(nId).orElseThrow(()->new ResourceNotFoundException("No se encontro el pasajero"));
-        return pasajeroMapper.pasajeroToPasajeroDTO(pasajero);
+    public PasajeroResponseDTO findByNid(String nId) {
+        Pasajero pasajero = pasajeroRepository.findByNid(nId).orElseThrow(()->new PasajeroNotFoundException("No se encontro el pasajero con el nId: " + nId));
+        return pasajeroMapper.pasajeroToPasajeroResponseDTO(pasajero);
     }
 
     @Override
-    public List<PasajeroRequestDTO> findByNombreContaining(String partialName) {
+    public List<PasajeroResponseDTO> findByNombreContaining(String partialName) {
         List<Pasajero> pasajeros = pasajeroRepository.findByNombreContaining(partialName);
-        if (pasajeros.isEmpty()) {
-            throw new ResourceNotFoundException("No se encontraron pasajeros con ese nombre");
-        }
         return pasajeros.stream()
-                .map(pasajeroMapper::pasajeroToPasajeroDTO)
+                .map(pasajeroMapper::pasajeroToPasajeroResponseDTO)
                 .collect(Collectors.toList());
     }
 
@@ -60,19 +57,16 @@ public class PasajeroServiceImpl implements PasajeroService {
     }
 
     @Override
-    public PasajeroRequestDTO findByPasaporteNumero(String passportNumber) {
-        Pasajero pasajero = pasajeroRepository.findByPasaporteNumero(passportNumber).orElseThrow(()->new ResourceNotFoundException("No se encontro el pasajero"));
-        return pasajeroMapper.pasajeroToPasajeroDTO(pasajero);
+    public PasajeroResponseDTO findByPasaporteNumero(String passportNumber) {
+        Pasajero pasajero = pasajeroRepository.findByPasaporteNumero(passportNumber).orElseThrow(()->new PasajeroNotFoundException("No se encontro un pasajero con el numero de pasaporte: " + passportNumber));
+        return pasajeroMapper.pasajeroToPasajeroResponseDTO(pasajero);
     }
 
     @Override
-    public List<PasajeroRequestDTO> searchByPartialName(String partialName) {
+    public List<PasajeroResponseDTO> searchByPartialName(String partialName) {
         List<Pasajero> pasajeros = pasajeroRepository.searchByPartialName(partialName);
-        if (pasajeros.isEmpty()) {
-            throw new ResourceNotFoundException("No se encontraron pasajeros con ese nombre");
-        }
         return pasajeros.stream()
-                .map(pasajeroMapper::pasajeroToPasajeroDTO)
+                .map(pasajeroMapper::pasajeroToPasajeroResponseDTO)
                 .collect(Collectors.toList());
     }
 
@@ -82,9 +76,9 @@ public class PasajeroServiceImpl implements PasajeroService {
     }
 
     @Override
-    public PasajeroRequestDTO findByNidAndNombre(String nid, String name) {
-        Pasajero pasajero = pasajeroRepository.findByNidAndNombre(nid,name).orElseThrow(()->new ResourceNotFoundException("No se encontro el pasajero"));
-        return pasajeroMapper.pasajeroToPasajeroDTO(pasajero);
+    public PasajeroResponseDTO findByNidAndNombre(String nid, String name) {
+        Pasajero pasajero = pasajeroRepository.findByNidAndNombre(nid,name).orElseThrow(()->new PasajeroNotFoundException("No se encontro el pasajero con el id: " + nid + " y con el nombre: " + name));
+        return pasajeroMapper.pasajeroToPasajeroResponseDTO(pasajero);
     }
 
     @Override
