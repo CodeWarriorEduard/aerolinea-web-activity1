@@ -1,7 +1,6 @@
 package com.rafael.actividad1.repository;
 
 import com.rafael.actividad1.config.TestContainerConfig;
-import com.rafael.actividad1.entity.Aerolinea;
 import com.rafael.actividad1.entity.Vuelo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,9 +71,9 @@ class VueloRepositoryTest {
     }
 
     @Test
-    void findVueloByOrigenTest() {
+    void findVuelosByOrigenTest() {
         String origen = "Madrid";
-        List<Vuelo> vuelosByOrigen = vueloRepository.findVueloByOrigen(origen);
+        List<Vuelo> vuelosByOrigen = vueloRepository.findVuelosByOrigen(origen);
 
         // Existe un vuelo desde Madrid entonces pasará el test
         assertFalse(vuelosByOrigen.isEmpty());
@@ -122,9 +121,9 @@ class VueloRepositoryTest {
     }
 
     @Test
-    void findVueloByOrigenStartsWithTest() {
+    void findVuelosByOrigenStartsWithTest() {
         String letter = "N";
-        List<Vuelo> vuelos = vueloRepository.findVueloByDestinoStartsWith(letter);
+        List<Vuelo> vuelos = vueloRepository.findVuelosByDestinoStartsWith(letter);
 
         assertEquals(1, vuelos.size());
 

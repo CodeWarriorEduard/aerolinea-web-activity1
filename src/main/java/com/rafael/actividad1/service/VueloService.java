@@ -1,11 +1,10 @@
 package com.rafael.actividad1.service;
 
+import com.rafael.actividad1.dto.request.VueloRequestDTO;
 import com.rafael.actividad1.dto.response.VueloResponseDTO;
-import com.rafael.actividad1.entity.Vuelo;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 public interface VueloService {
@@ -13,14 +12,14 @@ public interface VueloService {
 
     List<VueloResponseDTO> findVuelosByDestino(String name);
 
-    VueloResponseDTO save(Vuelo vuelo);
+    VueloResponseDTO save(VueloRequestDTO vueloRequestDTO);
 
     List<VueloResponseDTO> findAll();
 
     Long countVuelosByDestino(String destino);
 
     @Query("select v from Vuelo v where v.origen = :origen")
-    List<VueloResponseDTO> findVueloByOrigen(String origen);
+    List<VueloResponseDTO> findVuelosByOrigen(String origen);
 
     @Query("select  v from Vuelo  v order by v.destino")
     List<VueloResponseDTO> vuelosOrderedByDestino();
@@ -30,7 +29,7 @@ public interface VueloService {
 
 
     @Query("select v from Vuelo v where v.destino like concat(:letra, '%') ")
-    List<VueloResponseDTO> findVueloByDestinoStartsWith(String letra);
+    List<VueloResponseDTO> findVuelosByDestinoStartsWith(String letra);
 
     @Query("select count(v) from Vuelo  v join v.aerolineas a where  a.nombre = :nombre")
     Long numberOfVueloByNameOfAerolinea(String nombre);

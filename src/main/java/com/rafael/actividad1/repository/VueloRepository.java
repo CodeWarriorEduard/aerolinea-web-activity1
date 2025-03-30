@@ -1,6 +1,5 @@
 package com.rafael.actividad1.repository;
 
-import com.rafael.actividad1.entity.Aerolinea;
 import com.rafael.actividad1.entity.Vuelo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -23,7 +22,7 @@ public interface VueloRepository extends JpaRepository<Vuelo, Long>{
     Long countVuelosByDestino(String destino);
 
     @Query("select v from Vuelo v where v.origen = :origen")
-    List<Vuelo> findVueloByOrigen(String origen);
+    List<Vuelo> findVuelosByOrigen(String origen);
 
     @Query("select  v from Vuelo  v order by v.destino")
     List<Vuelo> vuelosOrderedByDestino();
@@ -33,7 +32,7 @@ public interface VueloRepository extends JpaRepository<Vuelo, Long>{
 
 
     @Query("select v from Vuelo v where v.destino like concat(:letra, '%') ")
-    List<Vuelo> findVueloByDestinoStartsWith(String letra);
+    List<Vuelo> findVuelosByDestinoStartsWith(String letra);
 
     @Query("select count(v) from Vuelo  v join v.aerolineas a where  a.nombre = :nombre")
     Long numberOfVueloByNameOfAerolinea(String nombre);

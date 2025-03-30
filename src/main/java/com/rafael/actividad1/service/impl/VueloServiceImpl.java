@@ -1,5 +1,6 @@
 package com.rafael.actividad1.service.impl;
 
+import com.rafael.actividad1.dto.request.VueloRequestDTO;
 import com.rafael.actividad1.dto.response.VueloResponseDTO;
 import com.rafael.actividad1.entity.Vuelo;
 import com.rafael.actividad1.exceptions.VueloNotFoundException;
@@ -40,8 +41,8 @@ public class VueloServiceImpl implements VueloService {
     }
 
     @Override
-    public VueloResponseDTO save(Vuelo vuelo) {
-        return vueloMapper.vueloToVueloResponseDTO(vueloRepository.save(vuelo));
+    public VueloResponseDTO save(VueloRequestDTO vueloRequestDTO) {
+        return vueloMapper.vueloToVueloResponseDTO(vueloRepository.save(vueloMapper.vueloRequestDTOToVuelo(vueloRequestDTO)));
     }
 
     @Override
@@ -58,8 +59,8 @@ public class VueloServiceImpl implements VueloService {
     }
 
     @Override
-    public List<VueloResponseDTO> findVueloByOrigen(String origen) {
-        List<Vuelo> vuelos = vueloRepository.findVueloByOrigen(origen);
+    public List<VueloResponseDTO> findVuelosByOrigen(String origen) {
+        List<Vuelo> vuelos = vueloRepository.findVuelosByOrigen(origen);
         return vuelos.stream()
                 .map(vueloMapper::vueloToVueloResponseDTO)
                 .collect(Collectors.toList());
@@ -80,8 +81,8 @@ public class VueloServiceImpl implements VueloService {
     }
 
     @Override
-    public List<VueloResponseDTO> findVueloByDestinoStartsWith(String letra) {
-        List<Vuelo> vuelos = vueloRepository.findVueloByDestinoStartsWith(letra);
+    public List<VueloResponseDTO> findVuelosByDestinoStartsWith(String letra) {
+        List<Vuelo> vuelos = vueloRepository.findVuelosByDestinoStartsWith(letra);
         return vuelos.stream()
                 .map(vueloMapper::vueloToVueloResponseDTO)
                 .collect(Collectors.toList());

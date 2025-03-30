@@ -9,4 +9,7 @@ import org.mapstruct.Mapping;
 public interface ReservaMapper {
 
     ReservaResponseDTO reservaToReservaResponsetDTO(Reserva reserva);
+
+    @Mapping(target = "vuelo", source = "vuelo", ignore = true)
+    Reserva reservaRequestDTOToReserva(ReservaRequestDTO reservaRequestDTO);
 }

@@ -1,4 +1,6 @@
 package com.rafael.actividad1.dto.request;
 
-public record ReservaRequestDTO() {
+import java.util.UUID;
+
+public record ReservaRequestDTO(UUID codigoReserva, PasajeroRequestDTO pasajero, VueloRequestDTO vuelo) {
 }
