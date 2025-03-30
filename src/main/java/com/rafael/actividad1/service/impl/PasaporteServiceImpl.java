@@ -28,14 +28,14 @@ public class PasaporteServiceImpl implements PasaporteService {
     public PasaporteResponseDTO findByNumero(String numero) {
         Pasaporte pasaporte = pasaporteRepository.findByNumero(numero).orElseThrow(() -> new PasaporteNotFoundException("No se encontro el pasaporte con el numero " + numero));
 
-        return pasaporteMapper.pasaporteToPasaporteDTO(pasaporte);
+        return pasaporteMapper.pasaporteToPasaporteResponseDTO(pasaporte);
     }
 
     @Override
     public PasaporteResponseDTO findByPasajeroId(Long pasajeroId) {
         Pasaporte pasaporte = pasaporteRepository.findByPasajeroId(pasajeroId).orElseThrow(() -> new PasaporteNotFoundException("No se encontro el pasaporte con ese pasajero"));
 
-        return pasaporteMapper.pasaporteToPasaporteDTO(pasaporte);
+        return pasaporteMapper.pasaporteToPasaporteResponseDTO(pasaporte);
     }
 
     @Override
@@ -47,7 +47,7 @@ public class PasaporteServiceImpl implements PasaporteService {
     public PasaporteResponseDTO findByPasajeroNombre(String nombre) {
         Pasaporte pasaporte = pasaporteRepository.findByPasajeroNombre(nombre).orElseThrow(() -> new PasaporteNotFoundException("No se encontro el pasaporte con ese pasajero"));
 
-        return pasaporteMapper.pasaporteToPasaporteDTO(pasaporte);
+        return pasaporteMapper.pasaporteToPasaporteResponseDTO(pasaporte);
     }
 
     @Override
@@ -64,14 +64,14 @@ public class PasaporteServiceImpl implements PasaporteService {
     public PasaporteResponseDTO findByPasajeroNId(String nId) {
         Pasaporte pasaporte = pasaporteRepository.findByPasajeroNId(nId).orElseThrow(() -> new PasaporteNotFoundException("No se encontro el pasaporte con ese pasajero"));
 
-        return pasaporteMapper.pasaporteToPasaporteDTO(pasaporte);
+        return pasaporteMapper.pasaporteToPasaporteResponseDTO(pasaporte);
     }
 
     @Override
     public List<PasaporteResponseDTO> searchByPartialNumber(String partialNumber) {
         List<Pasaporte> pasaportes = pasaporteRepository.searchByPartialNumber(partialNumber);
         return pasaportes.stream()
-                .map(pasaporteMapper::pasaporteToPasaporteDTO)
+                .map(pasaporteMapper::pasaporteToPasaporteResponseDTO)
                 .collect(Collectors.toList());
     }
 
@@ -79,7 +79,7 @@ public class PasaporteServiceImpl implements PasaporteService {
     public PasaporteResponseDTO findByPasajeroNombreAndNid(String name, String nid) {
         Pasaporte pasaporte = pasaporteRepository.findByPasajeroNombreAndNid(name,nid).orElseThrow(() -> new PasaporteNotFoundException("No se encontro el pasaporte con ese pasajero"));
 
-        return pasaporteMapper.pasaporteToPasaporteDTO(pasaporte);
+        return pasaporteMapper.pasaporteToPasaporteResponseDTO(pasaporte);
     }
 
     @Override

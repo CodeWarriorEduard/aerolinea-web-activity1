@@ -10,5 +10,5 @@ public interface PasaporteMapper {
 
     @Mapping(target = "numero", source = "numero")
     @Mapping(target = "pasajero", source = "pasajero",ignore = true)
-    PasaporteResponseDTO pasaporteToPasaporteDTO(Pasaporte pasaporte);
+    PasaporteResponseDTO pasaporteToPasaporteResponseDTO(Pasaporte pasaporte);
 }
