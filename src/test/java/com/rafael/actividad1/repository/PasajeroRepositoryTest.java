@@ -50,7 +50,8 @@ class PasajeroRepositoryTest {
     void whenFindingPasajeroByName_thenItReturnsCorrectPasajero(){
         Pasajero pasajero = pasajeroRepository.save(Utilidad.crearPasajero("pasajeroT", "123abc"));
         assertTrue(pasajeroRepository.findById(pasajero.getId()).isPresent());
-        assertEquals("123abc", pasajeroRepository.findByNombre("pasajeroT").get().getNid());
+
+        assertEquals("123abc", pasajeroRepository.findByNombre("pasajeroT").get(0).getNid());
     }
 
     @Test

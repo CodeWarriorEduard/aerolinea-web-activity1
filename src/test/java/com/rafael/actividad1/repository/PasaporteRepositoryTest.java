@@ -63,7 +63,7 @@ class PasaporteRepositoryTest {
 
         Pasaporte pasaporte = pasaporteRepository.save(Utilidad.crearPasaporteConPasajero("A123", pasajero));
 
-        assertEquals("A123",pasaporteRepository.findByPasajeroNombre("polloT").get().getNumero());
+        assertEquals("A123",pasaporteRepository.findByPasajeroNombre("polloT").get(0).getNumero());
     }
 
     @Test
