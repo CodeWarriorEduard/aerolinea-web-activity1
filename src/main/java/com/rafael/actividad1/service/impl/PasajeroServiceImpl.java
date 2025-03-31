@@ -27,9 +27,11 @@ public class PasajeroServiceImpl implements PasajeroService {
     }
 
     @Override
-    public PasajeroResponseDTO findByNombre(String nombre) {
-        Pasajero pasajero = pasajeroRepository.findByNombre(nombre).orElseThrow(()->new PasajeroNotFoundException("No se encontro un pasajero con el nombre: " + nombre));
-        return pasajeroMapper.pasajeroToPasajeroResponseDTO(pasajero);
+    public List<PasajeroResponseDTO> findByNombre(String nombre) {
+        List<Pasajero> pasajeros = pasajeroRepository.findByNombre(nombre);
+        return pasajeros.stream()
+                .map(pasajeroMapper::pasajeroToPasajeroResponseDTO)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -89,6 +91,8 @@ public class PasajeroServiceImpl implements PasajeroService {
         if (pasajero.isPresent()) {
             pasajeroRepository.deleteByNId(nId);
             succes = true;
+        }else {
+            throw new PasajeroNotFoundException("No se encontro el pasajero con el nid: " + nId);
         }
         return succes;
     }

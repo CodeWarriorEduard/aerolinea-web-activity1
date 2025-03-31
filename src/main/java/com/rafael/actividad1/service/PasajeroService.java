@@ -6,7 +6,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface PasajeroService {
-    PasajeroResponseDTO findByNombre(String nombre);
+    List<PasajeroResponseDTO> findByNombre(String nombre);
     PasajeroResponseDTO findByNid(String nId);
     List<PasajeroResponseDTO> findByNombreContaining(String partialName);
     boolean existsByNid(String nId);
