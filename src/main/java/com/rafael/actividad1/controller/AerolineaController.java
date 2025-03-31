@@ -5,6 +5,7 @@ import com.rafael.actividad1.entity.Aerolinea;
 import com.rafael.actividad1.response.DefaultApiResponse;
 import com.rafael.actividad1.service.AerolineaService;
 import com.rafael.actividad1.service.impl.AerolineaServiceImpl;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,8 +38,8 @@ public class AerolineaController {
         return ResponseEntity.ok().body(apiResponse);
     }
 
-    @PostMapping("/guardar")
-    public ResponseEntity<DefaultApiResponse<AerolineaResponseDTO>> guardarAerolinea(@RequestBody Aerolinea aerolinea){ // Reemplazar con dtos
+    @PostMapping("/nueva")
+    public ResponseEntity<DefaultApiResponse<AerolineaResponseDTO>> guardarAerolinea(@Valid  @RequestBody Aerolinea aerolinea){ // Reemplazar con dtos
 
         AerolineaResponseDTO responseDTO =  aerolineaService.saveAerolinea(aerolinea);
         DefaultApiResponse<AerolineaResponseDTO> apiResponse = new DefaultApiResponse<>(
