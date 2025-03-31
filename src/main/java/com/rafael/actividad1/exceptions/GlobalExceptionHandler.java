@@ -11,9 +11,9 @@ public class GlobalExceptionHandler {
 
 
     @ExceptionHandler(value = AerolineaNotFoundException.class)
-    public ResponseEntity<DefaultApiResponse<Object>> AerolineaNotFoundExceptionHandler(AerolineaNotFoundException e){
+    public ResponseEntity<DefaultApiResponse<Object>> aerolineaNotFoundExceptionHandler(AerolineaNotFoundException e){
         DefaultApiResponse<Object> apiResponse = new DefaultApiResponse<>(
-                "NOT FOUND",
+                "404 NOT FOUND",
                 e.getMessage(),
                 null,
                 null
@@ -21,5 +21,52 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(apiResponse, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(PasajeroNotFoundException.class)
+    public ResponseEntity<DefaultApiResponse<Object>> pasajeroNotFoundExceptionHandler
+            (PasajeroNotFoundException e){
+        DefaultApiResponse<Object> apiResponse = new DefaultApiResponse<>(
+                "404 NOT FOUND",
+                e.getMessage(),
+                null,
+                null
+        );
+        return new ResponseEntity<>(apiResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(PasaporteNotFoundException.class)
+    public ResponseEntity<DefaultApiResponse<Object>> pasaporteNotFoundExceptionHandler
+            (PasaporteNotFoundException e){
+        DefaultApiResponse<Object> apiResponse = new DefaultApiResponse<>(
+                "404 NOT FOUND",
+                e.getMessage(),
+                null,
+                null
+        );
+        return new ResponseEntity<>(apiResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(ReservaNotFoundException.class)
+    public ResponseEntity<DefaultApiResponse<Object>> reservaNotFoundExceptionHandler
+            (ReservaNotFoundException e){
+        DefaultApiResponse<Object> apiResponse = new DefaultApiResponse<>(
+                "404 NOT FOUND",
+                e.getMessage(),
+                null,
+                null
+        );
+        return new ResponseEntity<>(apiResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(VueloNotFoundException.class)
+    public ResponseEntity<DefaultApiResponse<Object>> vueloNotFoundExceptionHandler
+            (VueloNotFoundException e){
+        DefaultApiResponse<Object> apiResponse = new DefaultApiResponse<>(
+                "404 NOT FOUND",
+                e.getMessage(),
+                null,
+                null
+        );
+        return new ResponseEntity<>(apiResponse, HttpStatus.NOT_FOUND);
+    }
 
 }
