@@ -12,7 +12,7 @@ public interface PasaporteService {
 
     boolean existsByNumero(String numero);
 
-    PasaporteResponseDTO findByPasajeroNombre(String nombre);
+    List<PasaporteResponseDTO> findByPasajeroNombre(String nombre);
 
     int deleteByNumero(String numero);
 

@@ -33,7 +33,7 @@ public class PasajeroController {
         return response.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(apiResponse);
     }
 
-    @GetMapping("por-nid")
+    @GetMapping("/por-nid")
     public ResponseEntity<DefaultApiResponse<PasajeroResponseDTO>> getPasajeroByNid(@RequestParam String nid) {
         PasajeroResponseDTO response = pasajeroService.findByNid(nid);
         DefaultApiResponse<PasajeroResponseDTO> apiResponse = new DefaultApiResponse<>(

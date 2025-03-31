@@ -92,9 +92,9 @@ class PasaporteServiceImplTest {
         PasajeroResponseDTO pasajeroResponseDTO = new PasajeroResponseDTO("1a",null);
         PasaporteResponseDTO pasaporteResponseDTO = new PasaporteResponseDTO("1a",pasajeroResponseDTO);
         when(pasaporteMapper.pasaporteToPasaporteResponseDTO(pasaporte)).thenReturn(pasaporteResponseDTO);
-        when(pasaporteRepository.findByPasajeroNombre("pollo1")).thenReturn(Optional.of(pasaporte));
-        PasaporteResponseDTO responseDTO = pasaporteServiceImpl.findByPasajeroNombre("pollo1");
-        assertEquals(responseDTO.numero(), "1a");
+        when(pasaporteRepository.findByPasajeroNombre("pollo1")).thenReturn(List.of(pasaporte));
+        List<PasaporteResponseDTO> responseDTO = pasaporteServiceImpl.findByPasajeroNombre("pollo1");
+        assertEquals(responseDTO.size(), 1);
         verify(pasaporteRepository,times(1)).findByPasajeroNombre("pollo1");
     }
 

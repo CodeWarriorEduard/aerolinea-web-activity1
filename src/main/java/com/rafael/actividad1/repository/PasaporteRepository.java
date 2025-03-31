@@ -17,7 +17,7 @@ public interface PasaporteRepository extends JpaRepository<Pasaporte, Long> {
 
     boolean existsByNumero(String numero);
 
-    Optional<Pasaporte> findByPasajeroNombre(String nombre);
+    List<Pasaporte> findByPasajeroNombre(String nombre);
 
     int deleteByNumero(String numero);
 

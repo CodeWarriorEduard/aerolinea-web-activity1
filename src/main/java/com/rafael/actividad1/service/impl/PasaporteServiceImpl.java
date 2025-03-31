@@ -44,10 +44,12 @@ public class PasaporteServiceImpl implements PasaporteService {
     }
 
     @Override
-    public PasaporteResponseDTO findByPasajeroNombre(String nombre) {
-        Pasaporte pasaporte = pasaporteRepository.findByPasajeroNombre(nombre).orElseThrow(() -> new PasaporteNotFoundException("No se encontro el pasaporte con ese pasajero"));
+    public List<PasaporteResponseDTO> findByPasajeroNombre(String nombre) {
+        List<Pasaporte> pasaportes = pasaporteRepository.findByPasajeroNombre(nombre);
 
-        return pasaporteMapper.pasaporteToPasaporteResponseDTO(pasaporte);
+        return pasaportes.stream()
+                .map(pasaporteMapper::pasaporteToPasaporteResponseDTO)
+                .collect(Collectors.toList());
     }
 
     @Override
