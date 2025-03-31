@@ -17,9 +17,9 @@ public interface PasaporteRepository extends JpaRepository<Pasaporte, Long> {
 
     boolean existsByNumero(String numero);
 
-    Optional<Pasaporte> findByPasajeroNombre(String nombre);
+    List<Pasaporte> findByPasajeroNombre(String nombre);
 
-    void deleteByNumero(String numero);
+    int deleteByNumero(String numero);
 
     @Query("select p from Pasaporte p where p.pasajero.nid =:nId")
     Optional<Pasaporte> findByPasajeroNId(String nId);
@@ -36,5 +36,5 @@ public interface PasaporteRepository extends JpaRepository<Pasaporte, Long> {
     @Modifying
     @Transactional
     @Query("delete from Pasaporte p where p.pasajero.nid =:passengerNid")
-    void deleteByPasajeroNid(String passengerNid);
+    int deleteByPasajeroNid(String passengerNid);
 }

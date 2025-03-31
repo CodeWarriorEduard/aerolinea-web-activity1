@@ -23,9 +23,9 @@ public class Reserva {
     @Column(nullable = false)
     private UUID codigoReserva;
 
-   @ManyToOne
-   @JoinColumn(name = "pasajero_id", referencedColumnName = "id")
-   private Pasajero pasajero;
+    @ManyToOne
+    @JoinColumn(name = "pasajero_id", referencedColumnName = "id")
+    private Pasajero pasajero;
 
     @ManyToOne
     @JoinColumn(name = "vuelo_id", referencedColumnName = "id")

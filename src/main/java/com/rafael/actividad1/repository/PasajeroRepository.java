@@ -1,6 +1,5 @@
 package com.rafael.actividad1.repository;
 
-import com.rafael.actividad1.entity.Aerolinea;
 import com.rafael.actividad1.entity.Pasajero;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,7 +12,7 @@ import java.util.Optional;
 
 public interface PasajeroRepository extends JpaRepository<Pasajero, Long> {
 
-    Optional<Pasajero> findByNombre(String nombre);
+    List<Pasajero> findByNombre(String nombre);
 
     Optional<Pasajero> findByNid(String nId);
 
