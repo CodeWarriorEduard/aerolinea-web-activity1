@@ -7,10 +7,12 @@ import com.rafael.actividad1.response.DefaultApiResponse;
 import com.rafael.actividad1.service.AerolineaService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/aerolinea")
@@ -59,14 +61,30 @@ public class AerolineaController {
                 response,
                 null
         );
-        return response.isEmpty()? ResponseEntity.noContent().build(): ResponseEntity.ok().body(apiResponse);
+        return ResponseEntity.ok().body(apiResponse);
     }
 
     @GetMapping("/por-nombre")
-    public ResponseEntity<AerolineaResponseDTO> obtenerAerolineaPorNombre(@RequestParam String nombre){
-        return aerolineaService.findAerolineaByNombre(nombre)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<DefaultApiResponse<AerolineaResponseDTO>> obtenerAerolineaPorNombre(@RequestParam String nombre){
+
+        Optional<AerolineaResponseDTO> response = aerolineaService.findAerolineaByNombre(nombre);
+        if(response.isPresent()){
+            DefaultApiResponse<AerolineaResponseDTO> apiResponse = new  DefaultApiResponse<>(
+                    "OK",
+                    "Lista de aerolineas",
+                    response.get(),
+                    null
+            );
+            return ResponseEntity.ok().body(apiResponse);
+        }else {
+            DefaultApiResponse<AerolineaResponseDTO> apiResponse = new  DefaultApiResponse<>(
+                    "NOT FOUND",
+                    "Aerolinea no encontrada",
+                    null,
+                    null
+            );
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(apiResponse);
+        }
     }
 
     @GetMapping("/inicia-con-letra-a")
