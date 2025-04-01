@@ -55,6 +55,7 @@ class VueloRepositoryTest {
 
         Optional<Vuelo> result = vueloRepository.findById(savingVuelo.getId());
         assertTrue(result.isPresent());
+        assertEquals(savingVuelo.getDestino(), result.get().getDestino());
     }
 
     @Test
@@ -75,7 +76,7 @@ class VueloRepositoryTest {
         String origen = "Madrid";
         List<Vuelo> vuelosByOrigen = vueloRepository.findVuelosByOrigen(origen);
 
-        // Existe un vuelo desde Madrid entonces pasará el test
+        // Si existe un vuelo desde Madrid entonces pasará el test
         assertFalse(vuelosByOrigen.isEmpty());
 
         for ( Vuelo vuelo: vuelosByOrigen){
@@ -112,7 +113,6 @@ class VueloRepositoryTest {
 
     @Test
     void findVueloByNumeroVueloTest() {
-
         UUID numVuelo = UUID.fromString("c8b6762f-3082-43af-9e2a-75b3d21d0d8c");
         Optional<Vuelo> vuelo = vueloRepository.findVueloByNumeroVuelo(numVuelo);
         assertTrue(vuelo.isPresent());

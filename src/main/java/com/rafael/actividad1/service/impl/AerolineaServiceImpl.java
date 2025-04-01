@@ -2,6 +2,7 @@ package com.rafael.actividad1.service.impl;
 
 import com.rafael.actividad1.dto.request.AerolineaRequestDTO;
 import com.rafael.actividad1.dto.response.AerolineaResponseDTO;
+import com.rafael.actividad1.dto.response.AerolineaVuelosResponseDTO;
 import com.rafael.actividad1.entity.Aerolinea;
 import com.rafael.actividad1.exceptions.AerolineaNotFoundException;
 import com.rafael.actividad1.mapper.AerolineaMapper;
@@ -18,14 +19,14 @@ import java.util.Optional;
 @Service
 public class AerolineaServiceImpl implements AerolineaService {
 
-    @Autowired
-    private final AerolineaRepository aerolineaRepository;
 
-    @Autowired
+    private final AerolineaRepository aerolineaRepository;
     AerolineaMapper aerolineaMapper;
 
-    public AerolineaServiceImpl(AerolineaRepository aerolineaRepository) {
+    @Autowired
+    public AerolineaServiceImpl(AerolineaRepository aerolineaRepository, AerolineaMapper aerolineaMapper) {
         this.aerolineaRepository = aerolineaRepository;
+        this.aerolineaMapper = aerolineaMapper;
     }
 
     @Override
@@ -43,7 +44,7 @@ public class AerolineaServiceImpl implements AerolineaService {
             return success;
     }
 
-    // Retornamos en vez de un optional un dto
+    // Retornamos en vez de un optional un dto, para retornar excepción de ejemplo
     @Override
     public AerolineaResponseDTO findAerolineaById(Long id) {
         Aerolinea aerolinea = aerolineaRepository.findById(id).orElseThrow(()-> new AerolineaNotFoundException("Aerolinea no encontrada"));
@@ -58,34 +59,36 @@ public class AerolineaServiceImpl implements AerolineaService {
     @Override
     public List<AerolineaResponseDTO> findAllAerolineasInDb() {
         List<Aerolinea> aerolineas = aerolineaRepository.findAll();
-        return aerolineaMapper.aerolineaResponseDtoList(aerolineas);
+        return aerolineaMapper.toListOfAerolineaResponseDTO(aerolineas);
     }
 
     @Override
-    public Optional<Aerolinea> findAerolineaByNombre(String nombre) {
-        return aerolineaRepository.findByNombre(nombre);
+    public Optional<AerolineaResponseDTO> findAerolineaByNombre(String nombre) {
+        return aerolineaRepository.findByNombre(nombre)
+                .map(aerolineaMapper::aerolineaResponseDto);
     }
 
     @Override
-    public List<Aerolinea> aerolineaStartsWithA() {
-        return aerolineaRepository.aerolineaStartsWithA();
+    public List<AerolineaResponseDTO> aerolineaStartsWithA() {
+        return aerolineaMapper.toListOfAerolineaResponseDTO(aerolineaRepository.aerolineaStartsWithA());
     }
 
     @Override
-    public List<Aerolinea> findAerolineaByPassengerName(String nombre) {
-        return aerolineaRepository.findAerolineaByPassengerName(nombre);
+    public List<AerolineaResponseDTO> findAerolineaByPassengerName(String nombre) {
+        return aerolineaMapper.toListOfAerolineaResponseDTO(aerolineaRepository.findAerolineaByPassengerName(nombre));
     }
 
     @Override
-    public List<Aerolinea> aerolineasWithTwoFlightsx() {
-        return aerolineaRepository.aerolineasWithTwoFlightsx();
+    public List<AerolineaVuelosResponseDTO> aerolineasWithTwoFlightsx() {
+        return aerolineaMapper.aerolineaVuelosResponseDtos(aerolineaRepository.aerolineasWithTwoFlightsx());
     }
 
     @Override
-    public List<Aerolinea> findAllOrderedByName() {
-        return aerolineaRepository.findAllOrderedByName();
+    public List<AerolineaResponseDTO> findAllOrderedByName() {
+        return aerolineaMapper.toListOfAerolineaResponseDTO(aerolineaRepository.findAllOrderedByName());
     }
 
+    // Estructurar mejor respuesta
     @Override
     public Long countAllAerolineas() {
         return aerolineaRepository.countAllAerolineas();

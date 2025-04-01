@@ -21,8 +21,7 @@ public class PasajeroController {
     }
 
     @GetMapping("/por-nombre")
-    public ResponseEntity<DefaultApiResponse<List<PasajeroResponseDTO>>> getPasajerosByNombre
-            (@RequestParam String nombre) {
+    public ResponseEntity<DefaultApiResponse<List<PasajeroResponseDTO>>> getPasajerosByNombre(@RequestParam String nombre) {
         List<PasajeroResponseDTO> response = pasajeroService.findByNombre(nombre);
         DefaultApiResponse<List<PasajeroResponseDTO>> apiResponse = new DefaultApiResponse<>(
           null,
@@ -83,8 +82,7 @@ public class PasajeroController {
     }
 
     @GetMapping("/por-numero-pasaporte")
-    public ResponseEntity<DefaultApiResponse<PasajeroResponseDTO>> getByNumeroPasaporte
-            (@RequestParam String numeroPasaporte) {
+    public ResponseEntity<DefaultApiResponse<PasajeroResponseDTO>> getByNumeroPasaporte (@RequestParam String numeroPasaporte) {
         PasajeroResponseDTO response = pasajeroService.findByPasaporteNumero(numeroPasaporte);
         DefaultApiResponse<PasajeroResponseDTO> apiResponse = new DefaultApiResponse<>(
           null,

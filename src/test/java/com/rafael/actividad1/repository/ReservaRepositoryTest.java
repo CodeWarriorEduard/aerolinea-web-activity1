@@ -5,6 +5,7 @@ import com.rafael.actividad1.entity.Pasajero;
 import com.rafael.actividad1.entity.Reserva;
 import com.rafael.actividad1.entity.Vuelo;
 import com.rafael.actividad1.util.Utilidad;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -24,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @Testcontainers
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@Sql(scripts = "classpath:schema.sql")
+@Sql(scripts = "classpath:schema.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_CLASS)
 class ReservaRepositoryTest {
 
     @Autowired
@@ -43,7 +44,6 @@ class ReservaRepositoryTest {
     void whenFindingReservaByCodigoReserva_thenItReturnsCorrectReserva() {
 
         Reserva reserva = reservaRepository.save(Utilidad.crearReserva(null,null));
-
         assertEquals(reserva.getId(), reservaRepository.findByCodigoReserva(reserva.getCodigoReserva()).get().getId());
     }
 
@@ -52,7 +52,7 @@ class ReservaRepositoryTest {
 
         Pasajero pasajero = pasajeroRepository.save(Utilidad.crearPasajero("polloT","123abc"));
         Reserva reserva = reservaRepository.save(Utilidad.crearReserva(pasajero,null));
-
+        System.out.println("RESREVA"+ reserva);
         assertEquals(reserva.getId(), reservaRepository.findByPasajeroId(pasajero.getId()).get(0).getId());
     }
 
@@ -60,7 +60,6 @@ class ReservaRepositoryTest {
     void whenFindingRerservasByVueloId_thenItReturnsCorrectRerservas() {
         Vuelo vuelo = vueloRepository.save(Utilidad.crearVuelo("origen1","destino1"));
         Reserva reserva = reservaRepository.save(Utilidad.crearReserva(null,vuelo));
-
         assertEquals(reserva.getId(), reservaRepository.findByVueloId(vuelo.getId()).get(0).getId());
     }
 
@@ -76,7 +75,7 @@ class ReservaRepositoryTest {
         reservaRepository.save(Utilidad.crearReserva(null,vuelo));
         reservaRepository.save(Utilidad.crearReserva(null,vuelo));
 
-        int count = reservaRepository.countByVueloId(vuelo.getId());
+        Long count = reservaRepository.countByVueloId(vuelo.getId());
 
         assertEquals(2, count);
     }
@@ -139,4 +138,5 @@ class ReservaRepositoryTest {
         assertTrue(reserva.isEmpty());
 
     }
+
 }

@@ -1,15 +1,16 @@
-package com.rafael.actividad1.service;
+package com.rafael.actividad1.service.impl;
 
-import com.rafael.actividad1.dto.request.AerolineaRequestDTO;
 import com.rafael.actividad1.dto.response.AerolineaResponseDTO;
+import com.rafael.actividad1.dto.response.AerolineaVuelosResponseDTO;
+import com.rafael.actividad1.dto.response.VueloResponseDTO;
 import com.rafael.actividad1.entity.Aerolinea;
 import com.rafael.actividad1.entity.Pasajero;
 import com.rafael.actividad1.entity.Reserva;
 import com.rafael.actividad1.entity.Vuelo;
-import com.rafael.actividad1.exceptions.AerolineaNotFoundException;
+import com.rafael.actividad1.mapper.AerolineaMapper;
 import com.rafael.actividad1.repository.AerolineaRepository;
-import com.rafael.actividad1.service.impl.AerolineaServiceImpl;
 import org.junit.jupiter.api.Test;
+import org.mapstruct.factory.Mappers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -22,16 +23,20 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 
-class AerolineaServiceTest {
+class AerolineaServiceImplTest {
 
     @Mock
     private AerolineaRepository aerolineaRepository;
+
+    @Mock
+    AerolineaMapper aerolineaMapper = Mappers.getMapper(AerolineaMapper .class);
 
     @InjectMocks
     private AerolineaServiceImpl aerolineaService;
 
 
-    public AerolineaServiceTest() {
+
+    public AerolineaServiceImplTest() {
         MockitoAnnotations.openMocks(this);
     }
 
@@ -75,23 +80,28 @@ class AerolineaServiceTest {
 
     @Test
     void findAerolineaById_Test(){
+
         Long id = 1L;
+
         Aerolinea aerolinea = Aerolinea.builder()
-                .id(114L)
+                .id(id)
                 .nombre("Avianca")
                 .vuelos(List.of())
                 .build();
 
+        AerolineaResponseDTO responseDTO = new AerolineaResponseDTO("Avianca");
+
+
         when(aerolineaRepository.findById(id)).thenReturn(Optional.of(aerolinea));
+        when(aerolineaMapper.aerolineaResponseDto(aerolinea)).thenReturn(responseDTO);
+
 
         AerolineaResponseDTO response = aerolineaService.findAerolineaById(id);
 
-        assertEquals(response.nombre(), aerolinea.getNombre());
-
-        doThrow(AerolineaNotFoundException.class);
+        assertEquals(responseDTO.nombre(), response.nombre());
 
         verify(aerolineaRepository, times(1)).findById(id);
-
+        verify(aerolineaMapper, times(1)).aerolineaResponseDto(aerolinea);
     }
 
     @Test
@@ -103,12 +113,17 @@ class AerolineaServiceTest {
                 .vuelos(List.of())
                 .build();
 
+        AerolineaResponseDTO expected = new AerolineaResponseDTO("Avianca");
+
         when(aerolineaRepository.save(aerolinea)).thenReturn(aerolinea);
+
+        when(aerolineaMapper.aerolineaResponseDto(aerolinea)).thenReturn(expected);
 
         AerolineaResponseDTO response = aerolineaService.saveAerolinea(aerolinea);
 
-        assertEquals(aerolinea.getNombre(), response.nombre());
+        assertEquals(expected.nombre(), response.nombre());
         verify(aerolineaRepository).save(aerolinea);
+        verify(aerolineaMapper, times(1)).aerolineaResponseDto(aerolinea);
 
     }
 
@@ -133,14 +148,21 @@ class AerolineaServiceTest {
                 aerolinea2
         );
 
+
+        AerolineaResponseDTO responseDTO1 = new AerolineaResponseDTO("Avianca");
+        AerolineaResponseDTO responseDTO2 = new AerolineaResponseDTO("Emirates");
+
+        List<AerolineaResponseDTO> aerolineaResponseDTOS = List.of(responseDTO1, responseDTO2);
+
         when(aerolineaRepository.findAll()).thenReturn(aerolineas);
+        when(aerolineaMapper.toListOfAerolineaResponseDTO(aerolineas)).thenReturn(aerolineaResponseDTOS);
 
         List<AerolineaResponseDTO> response = aerolineaService.findAllAerolineasInDb();
 
-        assertEquals(aerolineas, response);
+        assertEquals(aerolineaResponseDTOS, response);
 
         verify(aerolineaRepository).findAll();
-
+        verify(aerolineaMapper, times(1)).toListOfAerolineaResponseDTO(aerolineas);
     }
 
 
@@ -153,13 +175,15 @@ class AerolineaServiceTest {
                 .vuelos(List.of())
                 .build();
 
+        AerolineaResponseDTO aerolineaResponseDTO =new AerolineaResponseDTO("Emirates");
 
         when(aerolineaRepository.findByNombre("Emirates")).thenReturn(Optional.of(aerolinea));
+        when(aerolineaMapper.aerolineaResponseDto(aerolinea)).thenReturn(aerolineaResponseDTO);
 
-        Optional<Aerolinea> response = aerolineaService.findAerolineaByNombre("Emirates");
+        Optional<AerolineaResponseDTO> response = aerolineaService.findAerolineaByNombre("Emirates");
 
         assertTrue(response.isPresent());
-        assertEquals("Emirates", response.get().getNombre());
+        assertEquals(aerolineaResponseDTO.nombre(), response.get().nombre());
         verify(aerolineaRepository).findByNombre("Emirates");
     }
 
@@ -171,16 +195,25 @@ class AerolineaServiceTest {
                 .vuelos(List.of())
                 .build();
 
-        when(aerolineaRepository.aerolineaStartsWithA()).thenReturn(List.of(aerolinea1));
+        List<Aerolinea> aerolineas = List.of(aerolinea1);
 
-        List<Aerolinea> response = aerolineaService.aerolineaStartsWithA();
+        List<AerolineaResponseDTO> aerolineaResponseDTOS = List.of(
+                new AerolineaResponseDTO("Avianca")
+        );
 
-        for (Aerolinea aerolinea: response){
-            assertTrue(aerolinea.getNombre().startsWith("A"));
+        when(aerolineaRepository.aerolineaStartsWithA()).thenReturn(aerolineas);
+
+        when(aerolineaMapper.toListOfAerolineaResponseDTO(aerolineas)).thenReturn(aerolineaResponseDTOS);
+
+        List<AerolineaResponseDTO> response = aerolineaService.aerolineaStartsWithA();
+
+
+        for (AerolineaResponseDTO aerolinea: response){
+            assertTrue(aerolinea.nombre().startsWith("A"));
         }
 
-        assertEquals(1, response.size()); // Que no este vacia la lista.
-
+        assertEquals(1, response.size()); // Verificar que no este vacia la lista.
+        assertEquals(aerolineaResponseDTOS, response);
         verify(aerolineaRepository).aerolineaStartsWithA();
 
     }
@@ -217,11 +250,16 @@ class AerolineaServiceTest {
                 .codigoReserva(UUID.randomUUID())
                 .build();
 
+
+        List<AerolineaResponseDTO> aerolineaResponseDTOS = List.of(
+                new AerolineaResponseDTO("Avianca")
+        );
+
         when(aerolineaRepository.findAerolineaByPassengerName("Rafael Ortiz")).thenReturn(List.of(aerolinea1));
+        when(aerolineaMapper.toListOfAerolineaResponseDTO(aerolineas)).thenReturn(aerolineaResponseDTOS);
+        List<AerolineaResponseDTO> response = aerolineaService.findAerolineaByPassengerName("Rafael Ortiz");
 
-        List<Aerolinea> response = aerolineaService.findAerolineaByPassengerName("Rafael Ortiz");
-
-        assertEquals(List.of(aerolinea1), response);
+        assertEquals(aerolineaResponseDTOS, response);
         assertEquals(1, response.size());
         assertEquals("Avianca", reserva.getVuelo().getAerolineas().get(0).getNombre());
 
@@ -232,14 +270,17 @@ class AerolineaServiceTest {
     @Test
     void aerolineasWithTwoFlightsx() {
 
+        UUID nVuelo1 = UUID.randomUUID();
+        UUID nVuelo2 = UUID.randomUUID();
+
         Vuelo vuelo1 = Vuelo.builder()
-                .numeroVuelo(UUID.randomUUID())
+                .numeroVuelo(nVuelo1)
                 .origen("Santa Marta")
                 .destino("Bogotá")
                 .build();
 
         Vuelo vuelo2 = Vuelo.builder()
-                .numeroVuelo(UUID.randomUUID())
+                .numeroVuelo(nVuelo2)
                 .origen("Santa Marta")
                 .destino("Barranquilla")
                 .build();
@@ -255,13 +296,25 @@ class AerolineaServiceTest {
                 .vuelos(vuelos)
                 .build();
 
+        // Expected
+
+        // Lista de vuelos
+
+        List<VueloResponseDTO> vuelosDTO = List.of(
+                new VueloResponseDTO(nVuelo1, "Santa Marta", "Bogotá"),
+                new VueloResponseDTO(nVuelo2, "Santa Marta", "Barranquilla")
+        );
+
+        List<AerolineaVuelosResponseDTO> aerolineaResponseDTOS = List.of(
+                new AerolineaVuelosResponseDTO("Avianca", vuelosDTO));
+
         when(aerolineaRepository.aerolineasWithTwoFlightsx()).thenReturn(List.of(aerolinea1));
+        when(aerolineaMapper.aerolineaVuelosResponseDtos(List.of(aerolinea1))).thenReturn(aerolineaResponseDTOS);
+        List<AerolineaVuelosResponseDTO> response = aerolineaService.aerolineasWithTwoFlightsx();
 
-        List<Aerolinea> response = aerolineaService.aerolineasWithTwoFlightsx();
-
-        assertEquals(1, response.size());
-        assertEquals("Santa Marta", response.get(0).getVuelos().get(0).getOrigen());
-        assertEquals("Barranquilla", response.get(0).getVuelos().get(1).getDestino());
+        assertEquals(aerolineaResponseDTOS.size(), response.size());
+        assertEquals("Santa Marta", response.get(0).vuelos().get(0).origen());
+        assertEquals("Barranquilla", response.get(0).vuelos().get(1).destino());
 
         verify(aerolineaRepository, times(1)).aerolineasWithTwoFlightsx();
 
@@ -282,22 +335,26 @@ class AerolineaServiceTest {
                 .vuelos(List.of())
                 .build();
 
-        List<Aerolinea> aerolineas = List.of(
-                aerolinea2,
-                aerolinea1
+        List<Aerolinea> aerolineas = List.of(aerolinea1, aerolinea2);
 
+        List<AerolineaResponseDTO> responseDTO = List.of(
+                new AerolineaResponseDTO("Avianca"),
+                new AerolineaResponseDTO("Emirates")
         );
 
-        when(aerolineaRepository.findAllOrderedByName()).thenReturn(List.of(aerolinea1, aerolinea2));
+        when(aerolineaRepository.findAllOrderedByName()).thenReturn(aerolineas);
+        when(aerolineaMapper.toListOfAerolineaResponseDTO(aerolineas)).thenReturn(responseDTO);
 
-        List<Aerolinea> response = aerolineaService.findAllOrderedByName();
+        List<AerolineaResponseDTO> response = aerolineaService.findAllOrderedByName();
 
-        assertEquals(2, response.size());
+        assertEquals(responseDTO.size(), response.size());
 
-        assertEquals(aerolineas.get(0).getNombre(), response.get(1).getNombre());
-        assertEquals(aerolineas.get(1).getNombre(), response.get(0).getNombre());
+        assertEquals(responseDTO.get(0).nombre(), response.get(0).nombre());
+        assertEquals(responseDTO.get(1).nombre(), response.get(1).nombre());
 
         verify(aerolineaRepository, times(1)).findAllOrderedByName();
+        verify(aerolineaMapper, times(1)).toListOfAerolineaResponseDTO(aerolineas);
+
 
     }
 

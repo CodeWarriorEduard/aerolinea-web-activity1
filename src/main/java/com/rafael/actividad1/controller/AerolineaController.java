@@ -1,20 +1,19 @@
 package com.rafael.actividad1.controller;
 
 import com.rafael.actividad1.dto.response.AerolineaResponseDTO;
+import com.rafael.actividad1.dto.response.AerolineaVuelosResponseDTO;
 import com.rafael.actividad1.entity.Aerolinea;
 import com.rafael.actividad1.response.DefaultApiResponse;
 import com.rafael.actividad1.service.AerolineaService;
-import com.rafael.actividad1.service.impl.AerolineaServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
-@RequestMapping("/apiv1/aerolinea")
+@RequestMapping("/api/v1/aerolinea")
 public class AerolineaController {
 
     @Autowired
@@ -64,35 +63,61 @@ public class AerolineaController {
     }
 
     @GetMapping("/por-nombre")
-    public ResponseEntity<Aerolinea> obtenerAerolineaPorNombre(@RequestParam String nombre){
-        Optional<Aerolinea> response = aerolineaService.findAerolineaByNombre(nombre);
-        return response.isEmpty()? ResponseEntity.notFound().build() : ResponseEntity.ok().body(response.get());
+    public ResponseEntity<AerolineaResponseDTO> obtenerAerolineaPorNombre(@RequestParam String nombre){
+        return aerolineaService.findAerolineaByNombre(nombre)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/inicia-con-letra-a")
-    public ResponseEntity<List<Aerolinea>> aerolineasQueEmpiezanPorA(){
-        List<Aerolinea> response = aerolineaService.aerolineaStartsWithA();
-        return response.isEmpty()? ResponseEntity.noContent().build(): ResponseEntity.ok().body(response);
+    public ResponseEntity<DefaultApiResponse<List<AerolineaResponseDTO>>> aerolineasQueEmpiezanPorA(){
+        List<AerolineaResponseDTO> response = aerolineaService.aerolineaStartsWithA();
+        DefaultApiResponse<List<AerolineaResponseDTO>> apiResponse = new  DefaultApiResponse<>(
+                "OK",
+                "Lista de aerolineas",
+                response,
+                null
+        );
+        return ResponseEntity.ok().body(apiResponse);
+
     }
 
     @GetMapping("/por-pasajero")
-    public ResponseEntity<List<Aerolinea>> obtenerAerolineaPorNombrePasajero(@RequestParam String nombre){
-        List<Aerolinea> response = aerolineaService.findAerolineaByPassengerName(nombre);
-        return response.isEmpty()? ResponseEntity.noContent().build(): ResponseEntity.ok().body(response);
+    public ResponseEntity<DefaultApiResponse<List<AerolineaResponseDTO>>> obtenerAerolineaPorNombrePasajero(@RequestParam String nombre){
+        List<AerolineaResponseDTO> response = aerolineaService.findAerolineaByPassengerName(nombre);
+        DefaultApiResponse<List<AerolineaResponseDTO>> apiResponse = new  DefaultApiResponse<>(
+                "OK",
+                "Lista de aerolineas",
+                response,
+                null
+        );
+        return ResponseEntity.ok().body(apiResponse);
     }
 
 
     @GetMapping("/dos-vuelos")
-    public ResponseEntity<List<Aerolinea>> aerolineasQueTienenDosVuelos(){
-        List<Aerolinea> response = aerolineaService.aerolineasWithTwoFlightsx();
-        return response.isEmpty()? ResponseEntity.noContent().build(): ResponseEntity.ok().body(response);
+    public ResponseEntity<DefaultApiResponse<List<AerolineaVuelosResponseDTO>>>  aerolineasQueTienenDosVuelos(){
+        List<AerolineaVuelosResponseDTO> response = aerolineaService.aerolineasWithTwoFlightsx();
+        DefaultApiResponse<List<AerolineaVuelosResponseDTO>> apiResponse = new  DefaultApiResponse<>(
+                "OK",
+                "Lista de aerolineas con dos vuelos",
+                response,
+                null
+        );
+        return ResponseEntity.ok().body(apiResponse);
     }
 
 
     @GetMapping("/todas/por-nombre")
-    public ResponseEntity<List<Aerolinea>> obtenerAerolineasOrdenadasPorNombre(){
-        List<Aerolinea> response = aerolineaService.findAllOrderedByName();
-        return response.isEmpty()? ResponseEntity.noContent().build(): ResponseEntity.ok().body(response);
+    public ResponseEntity<DefaultApiResponse<List<AerolineaResponseDTO>>> obtenerAerolineasOrdenadasPorNombre(){
+        List<AerolineaResponseDTO> response = aerolineaService.findAllOrderedByName();
+        DefaultApiResponse<List<AerolineaResponseDTO>> apiResponse = new  DefaultApiResponse<>(
+                "OK",
+                "Lista de aerolineas con dos vuelos",
+                response,
+                null
+        );
+        return ResponseEntity.ok().body(apiResponse);
     }
 
     @GetMapping("/total")

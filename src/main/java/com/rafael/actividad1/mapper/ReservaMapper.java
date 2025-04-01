@@ -8,7 +8,7 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring", uses = {PasajeroMapper.class, VueloMapper.class})
 public interface ReservaMapper {
 
-    ReservaResponseDTO reservaToReservaResponsetDTO(Reserva reserva);
+    ReservaResponseDTO reservaToReservaResponseDTO(Reserva reserva);
 
     @Mapping(target = "vuelo", source = "vuelo", ignore = true)
     Reserva reservaRequestDTOToReserva(ReservaRequestDTO reservaRequestDTO);

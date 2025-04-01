@@ -22,12 +22,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class PasajeroRepositoryTest {
 
-//    @Container
-//    public static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:latest")
-//            .withDatabaseName("testdb")
-//            .withUsername("testuser")
-//            .withPassword("testpass");
-
     @Autowired
     PasajeroRepository pasajeroRepository;
 
@@ -50,7 +44,7 @@ class PasajeroRepositoryTest {
     void whenFindingPasajeroByName_thenItReturnsCorrectPasajero(){
         Pasajero pasajero = pasajeroRepository.save(Utilidad.crearPasajero("pasajeroT", "123abc"));
         assertTrue(pasajeroRepository.findById(pasajero.getId()).isPresent());
-        assertEquals("123abc", pasajeroRepository.findByNombre("pasajeroT").get().getNid());
+        assertEquals("123abc", pasajeroRepository.findByNombre("pasajeroT").get(0).getNid());
     }
 
     @Test

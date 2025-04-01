@@ -2,6 +2,7 @@ package com.rafael.actividad1.service;
 
 import com.rafael.actividad1.dto.request.AerolineaRequestDTO;
 import com.rafael.actividad1.dto.response.AerolineaResponseDTO;
+import com.rafael.actividad1.dto.response.AerolineaVuelosResponseDTO;
 import com.rafael.actividad1.entity.Aerolinea;
 
 import java.util.List;
@@ -13,10 +14,10 @@ public interface AerolineaService {
     AerolineaResponseDTO findAerolineaById(Long id);
     AerolineaResponseDTO saveAerolinea(Aerolinea aerolinea);
     List<AerolineaResponseDTO> findAllAerolineasInDb();
-    Optional<Aerolinea> findAerolineaByNombre(String nombre);
-    List<Aerolinea> aerolineaStartsWithA();
-    List<Aerolinea> findAerolineaByPassengerName(String nombre);
-    List<Aerolinea> aerolineasWithTwoFlightsx();
-    List<Aerolinea> findAllOrderedByName();
+    Optional<AerolineaResponseDTO> findAerolineaByNombre(String nombre);
+    List<AerolineaResponseDTO> aerolineaStartsWithA();
+    List<AerolineaResponseDTO> findAerolineaByPassengerName(String nombre);
+    List<AerolineaVuelosResponseDTO> aerolineasWithTwoFlightsx();
+    List<AerolineaResponseDTO> findAllOrderedByName();
     Long countAllAerolineas();
 }

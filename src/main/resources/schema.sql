@@ -12,7 +12,7 @@ INSERT INTO aerolineas (id, nombre) VALUES
                                         (10, 'EagleFlight');
 
 
-INSERT INTO pasajeros (id, nid, nombre) VALUES
+INSERT INTO pasajeros (id, n_id, nombre) VALUES
                                              (1, 'P001', 'Juan Perez'),
                                              (2, 'P002', 'Maria Lopez'),
                                              (3, 'P003', 'Carlos Gomez'),
@@ -81,8 +81,6 @@ INSERT INTO vuelos_aerolineas (aerolinea_id, vuelo_id) VALUES
 
 
 
--- Asociar el nuevo vuelo a dos aerolíneas (ejemplo: AeroJet y SkyHigh Airlines)
-INSERT INTO vuelos_aerolineas (aerolinea_id, vuelo_id)
-VALUES
-    (1, 11),  -- AeroJet
-    (2, 11);  -- SkyHigh Airlines
+INSERT INTO vuelos_aerolineas (aerolinea_id, vuelo_id) VALUES
+                                                           (1, 11),  -- AeroJet
+                                                           (2, 11);  -- SkyHigh Airlines

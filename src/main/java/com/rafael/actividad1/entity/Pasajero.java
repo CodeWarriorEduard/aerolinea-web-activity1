@@ -21,7 +21,7 @@ public class Pasajero {
     @Column(nullable = false)
     @NotBlank(message = "El nombre es un campo obligatorio >:(")
     private String nombre;
-    @Column(nullable = false)
+    @Column(name = "n_id", nullable = false)
     @NotBlank(message = "El numero de identificacion es un campo obligatorio")
     private String nid;
 

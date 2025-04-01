@@ -1,6 +1,5 @@
 package com.rafael.actividad1.repository;
 
-import com.rafael.actividad1.entity.Aerolinea;
 import com.rafael.actividad1.entity.Reserva;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -21,7 +20,7 @@ public interface ReservaRepository extends JpaRepository<Reserva, Long> {
 
     boolean existsByCodigoReserva(UUID codigoReserva);
 
-    int countByVueloId(Long vueloId);
+    Long countByVueloId(Long vueloId);
 
     @Query("select r from Reserva r join r.pasajero p where p.nid = :nId")
     List<Reserva> findByPasajeroNid(String nId);

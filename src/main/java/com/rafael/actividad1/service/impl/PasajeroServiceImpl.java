@@ -59,7 +59,7 @@ public class PasajeroServiceImpl implements PasajeroService {
     }
 
     @Override
-    public PasajeroResponseDTO findByPasaporteNumero(String passportNumber) {
+        public PasajeroResponseDTO findByPasaporteNumero(String passportNumber) {
         Pasajero pasajero = pasajeroRepository.findByPasaporteNumero(passportNumber).orElseThrow(()->new PasajeroNotFoundException("No se encontro un pasajero con el numero de pasaporte: " + passportNumber));
         return pasajeroMapper.pasajeroToPasajeroResponseDTO(pasajero);
     }
