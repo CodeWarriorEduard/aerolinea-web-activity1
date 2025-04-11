@@ -17,6 +17,8 @@ public interface AerolineaMapper {
     @Mapping(target = "vuelos", source = "vuelos")
     AerolineaRequestDTO aerolineaRequestDto(Aerolinea aerolinea);
 
+    Aerolinea aerolineaRequestDtoToAerolinea(AerolineaRequestDTO aerolinea);
+
     @Mapping(target = "nombre", source = "nombre")
     AerolineaResponseDTO aerolineaResponseDto(Aerolinea aerolinea);
 

@@ -1,5 +1,6 @@
 package com.rafael.actividad1.service.impl;
 
+import com.rafael.actividad1.dto.request.AerolineaRequestDTO;
 import com.rafael.actividad1.dto.response.AerolineaResponseDTO;
 import com.rafael.actividad1.dto.response.AerolineaVuelosResponseDTO;
 import com.rafael.actividad1.dto.response.VueloResponseDTO;
@@ -115,11 +116,15 @@ class AerolineaServiceImplTest {
 
         AerolineaResponseDTO expected = new AerolineaResponseDTO("Avianca");
 
+        AerolineaRequestDTO aerolineaRequestDTO = new AerolineaRequestDTO("Avianca",List.of());
+
         when(aerolineaRepository.save(aerolinea)).thenReturn(aerolinea);
 
         when(aerolineaMapper.aerolineaResponseDto(aerolinea)).thenReturn(expected);
 
-        AerolineaResponseDTO response = aerolineaService.saveAerolinea(aerolinea);
+        when(aerolineaMapper.aerolineaRequestDtoToAerolinea(aerolineaRequestDTO)).thenReturn(aerolinea);
+
+        AerolineaResponseDTO response = aerolineaService.saveAerolinea(aerolineaRequestDTO);
 
         assertEquals(expected.nombre(), response.nombre());
         verify(aerolineaRepository).save(aerolinea);

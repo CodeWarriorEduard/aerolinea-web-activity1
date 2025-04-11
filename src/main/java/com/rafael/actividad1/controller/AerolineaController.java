@@ -1,5 +1,6 @@
 package com.rafael.actividad1.controller;
 
+import com.rafael.actividad1.dto.request.AerolineaRequestDTO;
 import com.rafael.actividad1.dto.response.AerolineaResponseDTO;
 import com.rafael.actividad1.dto.response.AerolineaVuelosResponseDTO;
 import com.rafael.actividad1.entity.Aerolinea;
@@ -40,7 +41,7 @@ public class AerolineaController {
     }
 
     @PostMapping("/nueva")
-    public ResponseEntity<DefaultApiResponse<AerolineaResponseDTO>> guardarAerolinea(@Valid  @RequestBody Aerolinea aerolinea){ // Reemplazar con dtos
+    public ResponseEntity<DefaultApiResponse<AerolineaResponseDTO>> guardarAerolinea(@Valid  @RequestBody AerolineaRequestDTO aerolinea){ // Reemplazar con dtos
 
         AerolineaResponseDTO responseDTO =  aerolineaService.saveAerolinea(aerolinea);
         DefaultApiResponse<AerolineaResponseDTO> apiResponse = new DefaultApiResponse<>(

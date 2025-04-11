@@ -9,10 +9,8 @@ import com.rafael.actividad1.mapper.AerolineaMapper;
 import com.rafael.actividad1.repository.AerolineaRepository;
 import com.rafael.actividad1.service.AerolineaService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -52,8 +50,8 @@ public class AerolineaServiceImpl implements AerolineaService {
     }
 
     @Override
-    public AerolineaResponseDTO saveAerolinea(Aerolinea aerolinea) {
-        return aerolineaMapper.aerolineaResponseDto(aerolineaRepository.save(aerolinea));
+    public AerolineaResponseDTO saveAerolinea(AerolineaRequestDTO aerolinea) {
+        return aerolineaMapper.aerolineaResponseDto(aerolineaRepository.save(aerolineaMapper.aerolineaRequestDtoToAerolinea(aerolinea)));
     }
 
     @Override
